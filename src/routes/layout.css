@@ -1,7 +1,6 @@
 :root {
 	--background: #ffffff;
 	--color: #000000;
-	--topnav-title: 'Hamster Cash';
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,4 +13,9 @@
 body {
 	background-color: var(--background);
 	color: var(--color);
+	font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+	font-size: 1.5rem;
 }
