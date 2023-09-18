@@ -14,4 +14,7 @@
 		padding: 0 1rem;
 		align-items: center;
 	}
+	h1 {
+		line-height: 1.5rem;
+	}
 </style>
