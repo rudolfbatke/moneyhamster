@@ -12,6 +12,7 @@
 <List>
 	<ListItem>
 		Apples
+		<span slot="sub">Groceries</span>
 		<span slot="end">$1.99</span>
 	</ListItem>
 </List>
