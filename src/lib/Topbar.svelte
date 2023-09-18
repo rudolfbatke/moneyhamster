@@ -2,9 +2,7 @@
 	<h1>
 		<slot>Hamster Cash</slot>
 	</h1>
-	<div>
-		<slot name="right" />
-	</div>
+	<slot name="end" />
 </header>
 
 <style>
