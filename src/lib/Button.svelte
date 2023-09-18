@@ -12,6 +12,7 @@
 		background-color: unset;
 		font-size: 1em;
 	}
+
 	button:hover {
 		background-color: var(--background-hover);
 	}
