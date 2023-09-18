@@ -9,7 +9,8 @@
 		color: var(--primary-color);
 		cursor: pointer;
 		padding: 0.5em 1em;
-		background-color: unset;
+		background-color: var(--background-color);
+		opacity: 0.8;
 		font-size: 1em;
 	}
 
