@@ -1,5 +1,7 @@
 <header>
-	<h1><slot /></h1>
+	<h1>
+		<slot>Hamster Cash</slot>
+	</h1>
 	<div>
 		<slot name="right" />
 	</div>
@@ -10,6 +12,6 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 0 1rem;
-		min-height: 2rem;
+		align-items: center;
 	}
 </style>
