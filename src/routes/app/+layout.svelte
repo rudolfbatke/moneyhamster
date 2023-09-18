@@ -1,7 +1,7 @@
 <script>
-	import TopNav from '../../lib/TopNav.svelte';
+	import Topbar from '../../lib/Topbar.svelte';
 </script>
 
-<TopNav />
+<Topbar />
 
 <slot />
