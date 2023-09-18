@@ -5,7 +5,7 @@
 <style>
 	div {
 		position: fixed;
-		bottom: 2rem;
+		bottom: 1rem;
 		right: 1rem;
 	}
 </style>
