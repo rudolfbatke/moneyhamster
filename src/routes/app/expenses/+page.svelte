@@ -1,10 +1,10 @@
 <script>
 	import { browser } from '$app/environment';
-	import Button from '$lib/Button.svelte';
-	import Float from '$lib/Float.svelte';
-	import List from '$lib/List.svelte';
-	import ListItem from '$lib/ListItem.svelte';
-	import Topbar from '$lib/Topbar.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Float from '$lib/components/Float.svelte';
+	import List from '$lib/components/List.svelte';
+	import ListItem from '$lib/components/ListItem.svelte';
+	import Topbar from '$lib/components/Topbar.svelte';
 	import { currency } from '$lib/utilities/formatter';
 
 	/** @type {import('../../../types').Expense[]}*/
@@ -43,5 +43,5 @@
 </List>
 
 <Float>
-	<Button on:click={() => console.log('new')}>+</Button>
+	<Button on:click={() => console.log('new')}>New</Button>
 </Float>

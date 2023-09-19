@@ -11,8 +11,13 @@
 		justify-content: space-between;
 		padding: 0 1rem;
 		align-items: center;
+		position: sticky;
+		background-color: var(--background-color);
+		top: 0;
+		border-bottom: 1px solid var(--border-color);
+		min-height: 3rem;
 	}
 	h1 {
-		line-height: 1.5rem;
+		margin: 0.9rem 0 0 0;
 	}
 </style>
