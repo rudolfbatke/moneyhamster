@@ -89,7 +89,9 @@
 </List>
 
 {#if editExpense}
-	<Dialog on:action={() => (editExpense = false)} />
+	<Dialog on:action={() => (editExpense = false)}>
+		<span slot="title">New Expense</span>
+	</Dialog>
 {/if}
 
 <Float>

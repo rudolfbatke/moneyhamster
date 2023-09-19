@@ -1,8 +1,11 @@
 <script>
+	/** @type {boolean} */
 	export let outlined = false;
+	/** @type {'primary' | 'danger'} */
+	export let color = 'primary';
 </script>
 
-<button class:outlined on:click>
+<button class:danger={color === 'danger'} class:outlined on:click>
 	<slot />
 </button>
 
@@ -28,5 +31,14 @@
 
 	button.outlined:hover {
 		background-color: var(--background-hover);
+	}
+
+	.danger {
+		border-color: var(--danger-color);
+		color: var(--danger-color);
+		background-color: var(--danger-color);
+	}
+	.danger.outlined {
+		color: var(--danger-color);
 	}
 </style>

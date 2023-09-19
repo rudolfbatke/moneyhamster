@@ -8,22 +8,28 @@
 	 * This is the code that is executed when the user clicks on the button
 	 * The value of the button is passed to the parent component
 	 *
-	 * @param {'confirm'|'cancel'} action
+	 * @param {'save'|'cancel'|'delete'|'copy'} action
 	 */
 	const click = (action) => dispatch('action', action);
 </script>
 
 <div class="overlay">
 	<dialog open>
-		<h2 class="title">
-			<slot name="title">Title</slot>
-		</h2>
+		<div class="title">
+			<h2>
+				<slot name="title">Title</slot>
+			</h2>
+			<Button on:click={() => click('cancel')} outlined>Cancel</Button>
+		</div>
 		<div class="content">
 			<slot />
 		</div>
 		<form class="actions">
-			<Button on:click={() => click('confirm')}>Yes</Button>
-			<Button on:click={() => click('cancel')}>No</Button>
+			<div>
+				<Button color="danger" outlined on:click={() => click('delete')}>Delete</Button>
+				<Button outlined on:click={() => click('copy')}>Copy</Button>
+			</div>
+			<Button on:click={() => click('save')}>Save</Button>
 		</form>
 	</dialog>
 </div>
@@ -51,24 +57,29 @@
 		border: 1px solid var(--border-color);
 	}
 
-	dialog .title {
-		margin-top: 0;
+	.title {
+		width: 321px;
+	}
+
+	.title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.title > h2 {
+		margin: 0;
 		color: var(--text-color);
 	}
 
-	dialog .content {
+	.content {
 		margin-top: 20px;
 	}
 
-	dialog .actions {
+	.actions {
+		display: flex;
+		justify-content: space-between;
 		margin-top: 20px;
 		text-align: right;
-	}
-
-	@media (max-width: 576px) {
-		dialog {
-			width: 100%;
-			max-width: 100%;
-		}
 	}
 </style>
