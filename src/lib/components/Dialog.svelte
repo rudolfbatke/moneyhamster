@@ -52,7 +52,7 @@
 		transform: translate(-50%, -50%);
 		max-width: 90%;
 		background-color: var(--background-color);
-		border-radius: 9px;
+		border-radius: 27px;
 		z-index: 1000;
 		border: 1px solid var(--border-color);
 	}

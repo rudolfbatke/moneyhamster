@@ -12,7 +12,7 @@
 <style>
 	button {
 		border: 1px solid var(--primary-color);
-		border-radius: 4px;
+		border-radius: 18px;
 		color: var(--background-color);
 		cursor: pointer;
 		padding: 0.5em 1em;
