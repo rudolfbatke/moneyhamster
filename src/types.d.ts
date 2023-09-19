@@ -10,11 +10,15 @@ export type ImportData = {
 
 export type SaveAction = 'update' | 'create';
 
+export interface CompleteExpense extends Expense {
+  category: Category;
+}
+
 export interface Expense extends Entity {
   amount: number;
   date: string;
   issue: string;
-  category?: number;
+  category: number;
 }
 
 export type ExpenseInput = {
