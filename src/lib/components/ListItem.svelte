@@ -1,9 +1,10 @@
 <script>
 	export let border = false;
 	export let sticky = false;
+	export let lucent = false;
 </script>
 
-<li class:border class:sticky on:click on:keypress>
+<li class:border class:sticky class:lucent on:click on:keypress>
 	<span>
 		<slot />
 		<div>
@@ -41,5 +42,9 @@
 	li.sticky {
 		position: sticky;
 		top: 0;
+	}
+
+	li.lucent {
+		opacity: 0.81;
 	}
 </style>

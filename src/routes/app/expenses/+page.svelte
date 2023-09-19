@@ -74,7 +74,7 @@
 		</ListItem>
 		{#if openLineItems.includes(month)}
 			{#each expenses as expense}
-				<ListItem>
+				<ListItem lucent>
 					{localDate(expense.date)}
 					{expense.issue}
 					<span slot="sub" style:color={expense.category?.color}>{expense.category?.name}</span>
