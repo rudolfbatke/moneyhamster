@@ -1,6 +1,7 @@
 <script>
 	import { browser } from '$app/environment';
 	import Button from '$lib/components/Button.svelte';
+	import Dialog from '$lib/components/Dialog.svelte';
 	import Float from '$lib/components/Float.svelte';
 	import List from '$lib/components/List.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
@@ -19,6 +20,8 @@
 
 	/** @type {string[]}*/
 	let openLineItems = [];
+
+	let editExpense = false;
 
 	/**
 	 * Display or hide expenses of a month
@@ -85,6 +88,10 @@
 	{/each}
 </List>
 
+{#if editExpense}
+	<Dialog on:action={() => (editExpense = false)} />
+{/if}
+
 <Float>
-	<Button>New</Button>
+	<Button on:click={() => (editExpense = true)}>New</Button>
 </Float>

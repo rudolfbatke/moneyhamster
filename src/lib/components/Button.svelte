@@ -2,7 +2,7 @@
 	export let outlined = false;
 </script>
 
-<button class:outlined>
+<button class:outlined on:click>
 	<slot />
 </button>
 
