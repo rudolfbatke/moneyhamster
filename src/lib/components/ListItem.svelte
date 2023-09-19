@@ -24,6 +24,10 @@
 		background-color: var(--background-color);
 	}
 
+	li:hover {
+		background-color: var(--background-hover);
+	}
+
 	div {
 		display: block;
 		color: var(--text-color);
@@ -33,6 +37,7 @@
 	li.border {
 		border-bottom: 1px solid var(--border-color);
 	}
+
 	li.sticky {
 		position: sticky;
 		top: 0;

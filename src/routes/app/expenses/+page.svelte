@@ -86,5 +86,5 @@
 </List>
 
 <Float>
-	<Button on:click={() => console.log('new')}>New</Button>
+	<Button>New</Button>
 </Float>
