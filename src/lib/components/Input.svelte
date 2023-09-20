@@ -2,6 +2,7 @@
 	/** @type {'text' | 'number' | 'date'} */
 	export let type = 'text';
 	export let label = '';
+	/** @type {string | number} */
 	export let value = '';
 	export let placeholder = '';
 	export let required = false;

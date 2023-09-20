@@ -9,22 +9,32 @@
 	import ListItem from '$lib/components/ListItem.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
-	import { currency, localDate, localMonthYear } from '$lib/utilities/formatter';
+	import { currency, kebapDate, localDate, localMonthYear } from '$lib/utilities/formatter';
 	import { sortCategories, sortExpenses } from '$lib/utilities/list';
+	import { nanoid } from 'nanoid';
 
-	/** @type {import('../../../types').Expense[]}*/
+	/**
+	 * @typedef {import('../../../types').CompleteExpense} CompleteExpense
+	 * @typedef {import('../../../types').Category} Category
+	 * @typedef {import('../../../types').Expense} Expense
+	 */
+
+	/** @type {Expense[]}*/
 	let expenses = [];
 
-	/** @type {import('../../../types').Category[]}*/
+	/** @type {Category[]}*/
 	let categories = [];
 
-	/** @type {Map<string, import('../../../types').CompleteExpense[]>}*/
+	/** @type {Map<string, CompleteExpense[]>}*/
 	let groubedExpenses = new Map();
 
 	/** @type {string[]}*/
 	let openLineItems = [];
 
-	let editExpense = false;
+	/** @type {Expense | undefined}*/
+	let editExpense = undefined;
+
+	let newExpense = false;
 
 	/**
 	 * Display or hide expenses of a month
@@ -37,6 +47,10 @@
 		} else {
 			openLineItems = [...openLineItems, month];
 		}
+	}
+
+	function today() {
+		return kebapDate(new Date());
 	}
 
 	if (browser) {
@@ -91,19 +105,31 @@
 	{/each}
 </List>
 
-{#if editExpense}
-	<Dialog on:action={() => (editExpense = false)}>
-		<span slot="title">New Expense</span>
+{#if newExpense || editExpense}
+	<Dialog on:action={() => (editExpense = undefined)}>
+		<span slot="title">{editExpense ? 'Edit Expense' : 'New Expense'}</span>
 		<form>
-			<Input label="Date" type="date" required />
-			<Input label="Issue" type="text" required placeholder="e.g. Lunch" />
-			<Input label="Cost amount" type="number" required placeholder="e.g. 12.34" />
+			<Input label="Date" type="date" required value={editExpense?.date || today()} />
+			<Input
+				label="Issue"
+				type="text"
+				required
+				placeholder="e.g. Lunch"
+				value={editExpense?.issue}
+			/>
+			<Input
+				label="Cost amount"
+				type="number"
+				required
+				placeholder="e.g. 12.34"
+				value={editExpense?.amount}
+			/>
 		</form>
 	</Dialog>
 {/if}
 
 <Float>
-	<Button variant="fill" color="primary" on:click={() => (editExpense = true)}>
+	<Button variant="fill" color="primary" on:click={() => (newExpense = true)}>
 		<AddIcon />
 	</Button>
 </Float>

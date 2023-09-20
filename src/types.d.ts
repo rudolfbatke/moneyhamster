@@ -18,7 +18,8 @@ export interface Expense extends Entity {
   amount: number;
   date: string;
   issue: string;
-  category: number;
+  /** Category id */
+  category: string;
 }
 
 export type ExpenseInput = {
@@ -33,7 +34,8 @@ export interface Category extends Entity {
 }
 
 export interface Entity {
-  id: number;
+  /** Unique identifier (nanoid(9)) */
+  id: string;
 }
 
 export interface Migration extends Changelog {

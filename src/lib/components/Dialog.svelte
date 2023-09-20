@@ -13,7 +13,7 @@
 	 *
 	 * @param {'save'|'close'|'delete'|'copy'} action
 	 */
-	const click = (action) => dispatch('action', action);
+	const onClick = (action) => dispatch('action', action);
 </script>
 
 <div class="overlay">
@@ -22,7 +22,7 @@
 			<h2>
 				<slot name="title">Title</slot>
 			</h2>
-			<Button on:click={() => click('close')}>
+			<Button on:click={() => onClick('close')}>
 				<CloseIcon />
 			</Button>
 		</div>
@@ -30,12 +30,12 @@
 			<slot />
 		</div>
 		<div class="actions">
-			<Button color="primary" variant="fill" on:click={() => click('save')}>Save</Button>
+			<Button color="primary" variant="fill" on:click={() => onClick('save')}>Save</Button>
 			<div>
-				<Button on:click={() => click('delete')} color="danger">
+				<Button on:click={() => onClick('delete')} color="danger">
 					<DeleteIcon />
 				</Button>
-				<Button on:click={() => click('copy')}>
+				<Button on:click={() => onClick('copy')}>
 					<CopyIcon />
 				</Button>
 			</div>
