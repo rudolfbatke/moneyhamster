@@ -1,9 +1,9 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import Button from './Button.svelte';
-	import Close from '$lib/icons/Close.svelte';
-	import Delete from '$lib/icons/Delete.svelte';
-	import Copy from '$lib/icons/Copy.svelte';
+	import CloseIcon from '$lib/icons/CloseIcon.svelte';
+	import CopyIcon from '$lib/icons/CopyIcon.svelte';
+	import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -22,21 +22,21 @@
 			<h2>
 				<slot name="title">Title</slot>
 			</h2>
-			<Button on:click={() => click('close')} style="plain">
-				<Close />
+			<Button on:click={() => click('close')}>
+				<CloseIcon />
 			</Button>
 		</div>
 		<div class="content">
 			<slot />
 		</div>
 		<div class="actions">
-			<Button on:click={() => click('save')}>Save</Button>
+			<Button color="primary" variant="fill" on:click={() => click('save')}>Save</Button>
 			<div>
-				<Button style="plain" on:click={() => click('copy')}>
-					<Copy />
+				<Button on:click={() => click('delete')} color="danger">
+					<DeleteIcon />
 				</Button>
-				<Button color="danger" style="plain" on:click={() => click('delete')}>
-					<Delete color="danger" />
+				<Button on:click={() => click('copy')}>
+					<CopyIcon />
 				</Button>
 			</div>
 		</div>

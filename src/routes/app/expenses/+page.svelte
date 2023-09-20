@@ -8,6 +8,7 @@
 	import List from '$lib/components/List.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
+	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { currency, localDate, localMonthYear } from '$lib/utilities/formatter';
 	import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
@@ -90,17 +91,19 @@
 	{/each}
 </List>
 
-{#if !editExpense}
+{#if editExpense}
 	<Dialog on:action={() => (editExpense = false)}>
 		<span slot="title">New Expense</span>
 		<form>
 			<Input label="Date" type="date" required />
 			<Input label="Issue" type="text" required placeholder="e.g. Lunch" />
 			<Input label="Cost amount" type="number" required placeholder="e.g. 12.34" />
-		</form></Dialog
-	>
+		</form>
+	</Dialog>
 {/if}
 
 <Float>
-	<Button on:click={() => (editExpense = true)}>New</Button>
+	<Button variant="fill" color="primary" on:click={() => (editExpense = true)}>
+		<AddIcon />
+	</Button>
 </Float>
