@@ -34,11 +34,16 @@
 	}
 
 	input {
-		border: 1px solid var(--text-color);
+		border: 1px solid var(--border-color);
 		border-radius: 1rem;
 		padding: 0.5rem;
 		font-size: 1rem;
 		background-color: var(--background-color);
 		color: var(--text-color);
+	}
+
+	input:focus {
+		outline: none;
+		border: 1px solid var(--primary-color);
 	}
 </style>
