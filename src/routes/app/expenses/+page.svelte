@@ -3,6 +3,8 @@
 	import Button from '$lib/components/Button.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Float from '$lib/components/Float.svelte';
+	import Input from '$lib/components/Input.svelte';
+
 	import List from '$lib/components/List.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
@@ -88,10 +90,15 @@
 	{/each}
 </List>
 
-{#if editExpense}
+{#if !editExpense}
 	<Dialog on:action={() => (editExpense = false)}>
 		<span slot="title">New Expense</span>
-	</Dialog>
+		<form>
+			<Input label="Date" type="date" required />
+			<Input label="Issue" type="text" required placeholder="e.g. Lunch" />
+			<Input label="Cost amount" type="number" required placeholder="e.g. 12.34" />
+		</form></Dialog
+	>
 {/if}
 
 <Float>

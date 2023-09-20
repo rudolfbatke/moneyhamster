@@ -1,18 +1,24 @@
 <script>
-	/** @type {boolean} */
-	export let outlined = false;
 	/** @type {'primary' | 'danger'} */
 	export let color = 'primary';
+	/** @type {'fill' | 'outline' | 'plain'} */
+	export let style = 'fill';
 </script>
 
-<button class:danger={color === 'danger'} class:outlined on:click>
+<button
+	class:danger={color === 'danger'}
+	class:fill={style === 'fill'}
+	class:outline={style === 'outline'}
+	class:plain={style === 'plain'}
+	on:click
+>
 	<slot />
 </button>
 
 <style>
 	button {
 		border: 1px solid var(--primary-color);
-		border-radius: 18px;
+		border-radius: 1rem;
 		color: var(--background-color);
 		cursor: pointer;
 		padding: 0.5em 1em;
@@ -24,13 +30,19 @@
 		background-color: var(--primary-hover);
 	}
 
-	button.outlined {
+	button.outline,
+	button.plain {
 		background-color: transparent;
 		color: var(--primary-color);
 	}
 
-	button.outlined:hover {
+	button.outline:hover,
+	button.plain:hover {
 		background-color: var(--background-hover);
+	}
+
+	button.plain {
+		border: none;
 	}
 
 	.danger {
@@ -38,7 +50,7 @@
 		color: var(--danger-color);
 		background-color: var(--danger-color);
 	}
-	.danger.outlined {
+	.danger.outline {
 		color: var(--danger-color);
 	}
 </style>

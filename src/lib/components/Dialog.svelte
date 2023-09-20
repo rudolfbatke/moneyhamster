@@ -1,6 +1,9 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
 	import Button from './Button.svelte';
+	import Close from '$lib/icons/Close.svelte';
+	import Delete from '$lib/icons/Delete.svelte';
+	import Copy from '$lib/icons/Copy.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -8,7 +11,7 @@
 	 * This is the code that is executed when the user clicks on the button
 	 * The value of the button is passed to the parent component
 	 *
-	 * @param {'save'|'cancel'|'delete'|'copy'} action
+	 * @param {'save'|'close'|'delete'|'copy'} action
 	 */
 	const click = (action) => dispatch('action', action);
 </script>
@@ -19,18 +22,24 @@
 			<h2>
 				<slot name="title">Title</slot>
 			</h2>
-			<Button on:click={() => click('cancel')} outlined>Cancel</Button>
+			<Button on:click={() => click('close')} style="plain">
+				<Close />
+			</Button>
 		</div>
 		<div class="content">
 			<slot />
 		</div>
-		<form class="actions">
-			<div>
-				<Button color="danger" outlined on:click={() => click('delete')}>Delete</Button>
-				<Button outlined on:click={() => click('copy')}>Copy</Button>
-			</div>
+		<div class="actions">
 			<Button on:click={() => click('save')}>Save</Button>
-		</form>
+			<div>
+				<Button style="plain" on:click={() => click('copy')}>
+					<Copy />
+				</Button>
+				<Button color="danger" style="plain" on:click={() => click('delete')}>
+					<Delete color="danger" />
+				</Button>
+			</div>
+		</div>
 	</dialog>
 </div>
 
@@ -52,7 +61,7 @@
 		transform: translate(-50%, -50%);
 		max-width: 90%;
 		background-color: var(--background-color);
-		border-radius: 27px;
+		border-radius: 1.5rem;
 		z-index: 1000;
 		border: 1px solid var(--border-color);
 	}
