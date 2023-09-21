@@ -5,7 +5,8 @@
 <style>
 	div {
 		position: fixed;
-		bottom: 1rem;
+		bottom: 5.4rem;
 		right: 1rem;
+		z-index: 1;
 	}
 </style>
