@@ -1,14 +1,13 @@
 <script>
-	import { browser } from '$app/environment';
 	import SellIcon from '$lib/icons/SellIcon.svelte';
 	import ShoppingCartIcon from '$lib/icons/ShoppingCartIcon.svelte';
+	import { page } from '$app/stores';
 
 	let pathname = '';
 
-	// Get the current pathname
-	if (browser) {
-		pathname = location.pathname;
-	}
+	page.subscribe(({ url }) => {
+		pathname = url.pathname;
+	});
 
 	const navItems = [
 		{

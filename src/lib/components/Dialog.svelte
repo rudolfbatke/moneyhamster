@@ -13,6 +13,8 @@
 	 * @type {((action: DialogAction) => void)}
 	 */
 	export let onButtonClick = () => {};
+
+	export let duplicateButton = false;
 </script>
 
 <div class="overlay">
@@ -34,9 +36,11 @@
 				<Button on:click={() => onButtonClick('delete')} color="danger">
 					<DeleteIcon />
 				</Button>
-				<Button on:click={() => onButtonClick('duplicate')}>
-					<CopyIcon />
-				</Button>
+				{#if duplicateButton}
+					<Button on:click={() => onButtonClick('duplicate')}>
+						<CopyIcon />
+					</Button>
+				{/if}
 			</div>
 		</div>
 	</dialog>

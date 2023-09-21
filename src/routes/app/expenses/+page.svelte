@@ -14,10 +14,10 @@
 	import { sortCategories, sortExpenses, sum } from '$lib/utilities/list';
 
 	/**
-	 * @typedef {import('./types').Category} Category
-	 * @typedef {import('./types').Expense} Expense
+	 * @typedef {import('./../types').Category} Category
+	 * @typedef {import('./../types').Expense} Expense
 	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
-	 * @typedef {import('./types').MonthExpenses} MonthExpenses
+	 * @typedef {import('./../types').MonthExpenses} MonthExpenses
 	 */
 
 	/** @type {Expense[]}*/
@@ -160,7 +160,7 @@
 </List>
 
 {#if editExpense !== undefined}
-	<Dialog onButtonClick={onDialogButtonClick}>
+	<Dialog onButtonClick={onDialogButtonClick} duplicateButton>
 		<span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
 		<form bind:this={form}>
 			<Input label="Date" id="date" type="date" required value={editExpense.date || today()} />

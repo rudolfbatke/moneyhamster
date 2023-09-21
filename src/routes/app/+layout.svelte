@@ -5,6 +5,7 @@
 <main>
 	<slot />
 </main>
+
 <Navbar />
 
 <style>
