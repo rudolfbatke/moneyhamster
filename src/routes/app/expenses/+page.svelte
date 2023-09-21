@@ -34,6 +34,9 @@
 	/** @type {Expense | undefined}*/
 	let editExpense = undefined;
 
+	/** @type {boolean | undefined}*/
+	let expenseIsNew = undefined;
+
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
 
@@ -58,6 +61,7 @@
 	}
 
 	function setNewExpense() {
+		expenseIsNew = true;
 		editExpense = {
 			id: (expenses.at(-1)?.id || 0) + 1,
 			date: today(),
@@ -79,6 +83,16 @@
 		if (action === 'delete') {
 			expenses = expenses.filter((e) => e.id !== editExpense?.id);
 			editExpense = undefined;
+			return;
+		}
+
+		if (action === 'duplicate') {
+			editExpense = {
+				...editExpense,
+				id: (expenses.at(-1)?.id || 0) + 1,
+				date: today()
+			};
+			expenseIsNew = true;
 			return;
 		}
 
@@ -132,7 +146,7 @@
 		</ListItem>
 		{#if openLineItems.includes(month)}
 			{#each getExpenseItems(expenses) as { expense, category }}
-				<ListItem lucent on:click={() => (editExpense = expense)}>
+				<ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))}>
 					{localDate(expense.date)}
 					{expense.issue}
 					<span slot="sub" style:color={category?.color}>{category?.name}</span>
@@ -145,7 +159,7 @@
 
 {#if editExpense !== undefined}
 	<Dialog onButtonClick={onDialogButtonClick}>
-		<span slot="title">{editExpense.issue ? 'Edit Expense' : 'New Expense'}</span>
+		<span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
 		<form bind:this={form}>
 			<Input label="Date" id="date" type="date" required value={editExpense.date || today()} />
 			<Input

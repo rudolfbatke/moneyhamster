@@ -1,8 +1,10 @@
 <script>
 	/** @type {'primary' | 'danger' | undefined} */
 	export let color = undefined;
+
 	/** @type {'fill' | 'outline' | undefined} */
 	export let variant = undefined;
+
 	/** @type {string |undefined} */
 	export let value = undefined;
 </script>
