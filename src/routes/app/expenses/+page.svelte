@@ -7,6 +7,7 @@
 
 	import List from '$lib/components/List.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
+	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
@@ -67,7 +68,7 @@
 			date: today(),
 			issue: '',
 			amount: 0,
-			category: 13
+			category: 0
 		};
 	}
 
@@ -102,7 +103,8 @@
 				...editExpense,
 				date: form.date.value,
 				issue: form.issue.value,
-				amount: Number(form.amount.value)
+				amount: Number(form.amount.value),
+				category: Number(form.category.value)
 			};
 
 			// if new expense, add to list of expenses, else update
@@ -178,6 +180,16 @@
 				placeholder="e.g. 12.34"
 				value={editExpense.amount || ''}
 			/>
+			<Select
+				label="Category"
+				id="category"
+				value={editExpense.category || ''}
+				placeholder="select a category"
+			>
+				{#each categories as category}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</Select>
 		</form>
 	</Dialog>
 {/if}
