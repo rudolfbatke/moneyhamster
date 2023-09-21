@@ -57,7 +57,7 @@
 		}
 	}
 
-	function newExpense() {
+	function setNewExpense() {
 		editExpense = {
 			id: (expenses.at(-1)?.id || 0) + 1,
 			date: today(),
@@ -72,6 +72,12 @@
 		if (editExpense === undefined) return;
 
 		if (action === 'close') {
+			editExpense = undefined;
+			return;
+		}
+
+		if (action === 'delete') {
+			expenses = expenses.filter((e) => e.id !== editExpense?.id);
 			editExpense = undefined;
 			return;
 		}
@@ -163,7 +169,7 @@
 {/if}
 
 <Float>
-	<Button variant="fill" color="primary" on:click={() => newExpense()}>
+	<Button variant="fill" color="primary" on:click={() => setNewExpense()}>
 		<AddIcon />
 	</Button>
 </Float>
