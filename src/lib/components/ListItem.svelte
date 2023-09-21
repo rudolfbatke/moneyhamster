@@ -35,16 +35,17 @@
 		font-size: 0.8rem;
 	}
 
-	li.border {
+	.border {
 		border-bottom: 1px solid var(--border-color);
 	}
 
-	li.sticky {
+	.sticky {
 		position: sticky;
 		top: 0;
+		z-index: 1;
 	}
 
-	li.lucent {
+	.lucent {
 		opacity: 0.81;
 	}
 </style>
