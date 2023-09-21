@@ -10,7 +10,7 @@
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
-	import { sortCategories, sortExpenses } from '$lib/utilities/list';
+	import { sortCategories, sortExpenses, sum } from '$lib/utilities/list';
 
 	/**
 	 * @typedef {import('./types').Category} Category
@@ -36,6 +36,13 @@
 
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
+
+	// group expenses by month
+	$: monthExpenses = expenses.reduce((/**@type MonthExpenses*/ acc, e) => {
+		const month = localMonthYear(e.date);
+		acc[month] = acc[month] ? [...acc[month], e] : [e];
+		return acc;
+	}, {});
 
 	/**
 	 * Show/hide expenses of a month
@@ -90,38 +97,22 @@
 		}
 	}
 
+	/** @param {Expense[]} expenses */
+	function getExpenseItems(expenses) {
+		const sortedExpenses = sortExpenses(expenses);
+		const expenseItems = sortedExpenses.map((e) => {
+			const category = categories.find((c) => c.id === e.category);
+			return { expense: e, category };
+		});
+		return expenseItems;
+	}
+
+	// load data from local storage
 	if (browser) {
-		// load data from local storage
 		const unsortedExpenses = JSON.parse(window.localStorage.getItem('expenses') || '[]');
 		expenses = sortExpenses(unsortedExpenses);
 		const unsortedCategories = JSON.parse(window.localStorage.getItem('categories') || '[]');
 		categories = sortCategories(unsortedCategories);
-	}
-
-	$: {
-		/** @type {MonthExpenses}*/
-		const map = {};
-		expenses.forEach((e) => {
-			// find category by id
-			const category = categories.find((c) => c.id === e.category);
-
-			// skip if no category
-			if (!category) return;
-
-			// month is the key
-			const month = localMonthYear(e.date);
-
-			// add category to expense
-			const expenseWithCategory = { ...e, category };
-
-			// add to map
-			if (!map[month]) {
-				map[month] = [expenseWithCategory];
-			} else {
-				map[month].push(expenseWithCategory);
-			}
-		});
-		monthExpenses = map;
 	}
 </script>
 
@@ -131,14 +122,14 @@
 	{#each Object.entries(monthExpenses) as [month, expenses]}
 		<ListItem sticky border on:click={() => toggleExpenses(month)}>
 			<span>{month}</span>
-			<span slot="end">{currency(expenses.reduce((acc, e) => acc + e.amount, 0))}</span>
+			<span slot="end">{currency(sum(expenses))}</span>
 		</ListItem>
 		{#if openLineItems.includes(month)}
-			{#each expenses as expense}
-				<ListItem lucent>
+			{#each getExpenseItems(expenses) as { expense, category }}
+				<ListItem lucent on:click={() => (editExpense = expense)}>
 					{localDate(expense.date)}
 					{expense.issue}
-					<span slot="sub" style:color={expense.category?.color}>{expense.category?.name}</span>
+					<span slot="sub" style:color={category?.color}>{category?.name}</span>
 					<span slot="end">{currency(expense.amount)}</span>
 				</ListItem>
 			{/each}

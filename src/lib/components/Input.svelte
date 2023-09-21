@@ -16,7 +16,7 @@
 		{label}
 	</label>
 
-	<input {type} {value} {placeholder} {required} {disabled} {readonly} {id} />
+	<input {type} {value} {placeholder} {required} {disabled} {readonly} {id} step="any" />
 </div>
 
 <style>

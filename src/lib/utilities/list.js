@@ -32,3 +32,6 @@ export const sortCategories = (categories) =>
 /** @param {Expense} expense */
 export const getExpenseLabel = (expense) =>
   `${daySlashMonthSlashYear(expense.date)} ${expense.issue}`;
+
+/** @param {Expense[]} expenses */
+export const sum = (expenses) => expenses.reduce((acc, e) => acc + e.amount, 0);
