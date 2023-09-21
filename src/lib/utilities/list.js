@@ -2,10 +2,9 @@ import { daySlashMonthSlashYear } from './formatter';
 import { maxBy, sortBy } from 'lodash';
 
 /**
- * @typedef {import('../../types').Expense} Expense
- * @typedef {import('../../types').CompleteExpense} CompleteExpense
- * @typedef {import('../../types').Category} Category
- * @typedef {import('../../types').Entity} Entity
+ * @typedef {import('../../routes/app/expenses/types').Expense} Expense
+ * @typedef {import('../../routes/app/expenses/types').Category} Category
+ * @typedef {import('../../routes/app/expenses/types').Entity} Entity
  */
 
 /** @param {Entity[]} entities */

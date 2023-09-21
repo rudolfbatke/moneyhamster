@@ -14,6 +14,9 @@ export const currency = (amount, maximumFractionDigits = 2) => {
   }).format(amount);
 };
 
+/** Get the current date as a kebab string (2001-01-01) */
+export const today = () => kebapDate(new Date());
+
 /**
  * Format a date to a kebab string (2001-01-01)
  *

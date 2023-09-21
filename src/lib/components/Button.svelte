@@ -3,6 +3,8 @@
 	export let color = undefined;
 	/** @type {'fill' | 'outline' | undefined} */
 	export let variant = undefined;
+	/** @type {string |undefined} */
+	export let value = undefined;
 </script>
 
 <button
@@ -11,6 +13,7 @@
 	class:fill={variant === 'fill'}
 	class:outline={variant === 'outline'}
 	on:click
+	{value}
 >
 	<slot />
 </button>
@@ -33,6 +36,11 @@
 
 	button:hover {
 		background-color: var(--button-background-hover, var(--background-hover));
+	}
+
+	button:focus {
+		outline: none;
+		border: 1px solid var(--focus-color);
 	}
 
 	.fill {

@@ -9,6 +9,8 @@
 	--primary-hover: #0069d9;
 	--danger-color: #dc3545;
 	--danger-hover: #bd2130;
+
+	--focus-color: #80bdff;
 }
 
 @media (prefers-color-scheme: dark) {

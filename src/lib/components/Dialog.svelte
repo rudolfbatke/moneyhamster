@@ -1,19 +1,18 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import Button from './Button.svelte';
 	import CloseIcon from '$lib/icons/CloseIcon.svelte';
 	import CopyIcon from '$lib/icons/CopyIcon.svelte';
 	import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
-	const dispatch = createEventDispatcher();
+	/** @typedef {import('./types').DialogAction} DialogAction*/
 
 	/**
-	 * This is the code that is executed when the user clicks on the button
+	 * Executed when the user clicks on a button
 	 * The value of the button is passed to the parent component
 	 *
-	 * @param {'save'|'close'|'delete'|'copy'} action
+	 * @type {((action: DialogAction) => void)}
 	 */
-	const onClick = (action) => dispatch('action', action);
+	export let onButtonClick = () => {};
 </script>
 
 <div class="overlay">
@@ -22,7 +21,7 @@
 			<h2>
 				<slot name="title">Title</slot>
 			</h2>
-			<Button on:click={() => onClick('close')}>
+			<Button on:click={() => onButtonClick('close')}>
 				<CloseIcon />
 			</Button>
 		</div>
@@ -30,12 +29,12 @@
 			<slot />
 		</div>
 		<div class="actions">
-			<Button color="primary" variant="fill" on:click={() => onClick('save')}>Save</Button>
+			<Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button>
 			<div>
-				<Button on:click={() => onClick('delete')} color="danger">
+				<Button on:click={() => onButtonClick('delete')} color="danger">
 					<DeleteIcon />
 				</Button>
-				<Button on:click={() => onClick('copy')}>
+				<Button on:click={() => onButtonClick('duplicate')}>
 					<CopyIcon />
 				</Button>
 			</div>

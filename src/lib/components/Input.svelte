@@ -8,14 +8,14 @@
 	export let required = false;
 	export let disabled = false;
 	export let readonly = false;
-
-	const id = label || Math.random().toString(36).substring(2, 15);
+	export let id = '';
 </script>
 
 <div>
 	<label for={id}>
 		{label}
 	</label>
+
 	<input {type} {value} {placeholder} {required} {disabled} {readonly} {id} />
 </div>
 
@@ -45,6 +45,6 @@
 
 	input:focus {
 		outline: none;
-		border: 1px solid var(--primary-color);
+		border: 1px solid var(--focus-color);
 	}
 </style>
