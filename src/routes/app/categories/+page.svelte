@@ -135,7 +135,7 @@
 
 <div class="table">
 	<div class="header row">
-		<div class="category">Category</div>
+		<div class="cell category">Category</div>
 		<div class="cells">
 			{#each months as month}
 				<div class="cell">
@@ -151,8 +151,15 @@
 	</div>
 
 	{#each categories as category}
-		<div class="row">
-			<div class="category" style={`color: ${category.color}`}>{category.name}</div>
+		<div class="content row">
+			<div
+				on:click={() => (editCategory = category)}
+				on:keypress={() => {}}
+				class="cell category"
+				style={`color: ${category.color}`}
+			>
+				{category.name}
+			</div>
 			<div class="cells">
 				{#each months as month}
 					<div class="cell">
@@ -169,7 +176,7 @@
 	{/each}
 
 	<div class="totals row">
-		<div class="category">Totals</div>
+		<div class="cell category">Totals</div>
 		<div class="cells">
 			{#each monthlyTotals as total}
 				<div class="cell">
@@ -204,30 +211,20 @@
 	.header {
 		position: sticky;
 		top: 0;
-		font-weight: bold;
 		z-index: 5;
-		background: var(--background-color);
 	}
 
+	.header,
 	.totals {
 		font-weight: bold;
 	}
 
 	.row {
 		display: flex;
-		width: fit-content;
-		align-items: center;
 	}
 
-	.category {
-		width: 6rem;
-		position: sticky;
-		left: 0;
-		z-index: 3;
-		background: var(--background-color);
-		padding: 0.9rem 0;
-		padding-left: 1rem;
-		word-break: break-all;
+	.row:hover .cell {
+		background: var(--background-hover) !important;
 	}
 
 	.cells {
@@ -237,8 +234,25 @@
 	}
 
 	.cell {
-		min-width: 4rem;
-		text-align: right;
-		padding: 0.9rem 0;
+		width: 4rem;
+		height: 3rem;
+		background: var(--background-color);
+		display: flex;
+		align-items: center;
+		justify-content: right;
+	}
+
+	.category.cell {
+		width: 6rem;
+		position: sticky;
+		left: 0;
+		z-index: 3;
+		padding-left: 1rem;
+		word-break: break-all;
+		justify-content: left;
+	}
+
+	.content > .category {
+		cursor: pointer;
 	}
 </style>
