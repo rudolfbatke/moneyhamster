@@ -10,6 +10,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
+	import { expensesStore } from '$lib/stores';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
 	import { sortCategories, sortExpenses, sum } from '$lib/utilities/list';
 
@@ -48,6 +49,8 @@
 		return acc;
 	}, {});
 
+	expensesStore.subscribe((value) => (expenses = value));
+
 	/**
 	 * Show/hide expenses of a month
 	 *
@@ -76,17 +79,6 @@
 	function onDialogButtonClick(action) {
 		if (editExpense === undefined) return;
 
-		if (action === 'close') {
-			editExpense = undefined;
-			return;
-		}
-
-		if (action === 'delete') {
-			expenses = expenses.filter((e) => e.id !== editExpense?.id);
-			editExpense = undefined;
-			return;
-		}
-
 		if (action === 'duplicate') {
 			editExpense = {
 				...editExpense,
@@ -95,6 +87,10 @@
 			};
 			expenseIsNew = true;
 			return;
+		}
+
+		if (action === 'delete') {
+			expensesStore.update((value) => value.filter((e) => e.id !== editExpense?.id));
 		}
 
 		if (action === 'save') {
@@ -109,14 +105,16 @@
 
 			// if new expense, add to list of expenses, else update
 			const index = expenses.findIndex((e) => e.id === editExpense?.id);
+			let expensesUpdate = [...expenses];
 			if (index === -1) {
-				expenses = sortExpenses([...expenses, editExpense]);
+				expensesUpdate = sortExpenses([...expenses, editExpense]);
 			} else {
-				expenses[index] = editExpense;
+				expensesUpdate[index] = editExpense;
 			}
-			editExpense = undefined;
-			return;
+			expensesStore.set(expensesUpdate);
 		}
+
+		editExpense = undefined;
 	}
 
 	/** @param {Expense[]} expenses */
@@ -131,8 +129,6 @@
 
 	// load data from local storage
 	if (browser) {
-		const unsortedExpenses = JSON.parse(window.localStorage.getItem('expenses') || '[]');
-		expenses = sortExpenses(unsortedExpenses);
 		const unsortedCategories = JSON.parse(window.localStorage.getItem('categories') || '[]');
 		categories = sortCategories(unsortedCategories);
 	}

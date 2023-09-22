@@ -8,7 +8,7 @@
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { currency, getYearMonth, monthSlashYear } from '$lib/utilities/formatter';
 	import { sortCategories } from '$lib/utilities/list';
-	import { expenses_store, categories_store } from '$lib/stores';
+	import { expensesStore, categories_store } from '$lib/stores';
 	import { categoryColors } from '$lib/settings';
 
 	/**
@@ -37,7 +37,7 @@
 	let selectColor = false;
 
 	categories_store.subscribe((value) => (categories = value));
-	expenses_store.subscribe((value) => (expenses = value));
+	expensesStore.subscribe((value) => (expenses = value));
 
 	$: categoryMonthlyAmounts = expenses.reduce((/**@type CategoryMonthlyAmounts*/ acc, e) => {
 		const { date: expenseDate, amount: expenseAmount, category: categoryId } = e;

@@ -5,7 +5,7 @@ import { writable } from 'svelte/store';
 
 /** @type { Expense[] } */
 const expenses = [];
-export const expenses_store = writable(expenses);
+export const expensesStore = writable(expenses);
 
 /** @type { Category[] } */
 const categories = [];
