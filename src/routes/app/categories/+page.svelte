@@ -220,13 +220,14 @@
 	}
 
 	.category {
-		min-width: 7rem;
+		width: 6rem;
 		position: sticky;
 		left: 0;
 		z-index: 3;
 		background: var(--background-color);
 		padding: 0.9rem 0;
 		padding-left: 1rem;
+		word-break: break-all;
 	}
 
 	.cells {
