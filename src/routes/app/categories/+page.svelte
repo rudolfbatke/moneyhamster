@@ -13,16 +13,9 @@
 
 	/**
 	 * @typedef {import('./../types').Category} Category
-	 * @typedef {import('./../types').Expense} Expense
 	 * @typedef {import('./../types').CategoryMonthlyAmounts} CategoryMonthlyAmounts
 	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
 	 */
-
-	/** @type {Expense[]}*/
-	let expenses = [];
-
-	/** @type {Category[]}*/
-	let categories = [];
 
 	/** @type {Category | undefined}*/
 	let editCategory = undefined;
@@ -36,8 +29,9 @@
 	/** open color select dialog */
 	let selectColor = false;
 
-	categoriesStore.subscribe((value) => (categories = value));
-	expensesStore.subscribe((value) => (expenses = value));
+	$: expenses = $expensesStore;
+
+	$: categories = $categoriesStore;
 
 	$: categoryMonthlyAmounts = expenses.reduce((/**@type CategoryMonthlyAmounts*/ acc, e) => {
 		const { date: expenseDate, amount: expenseAmount, category: categoryId } = e;

@@ -14,17 +14,10 @@
 	import { sortExpenses, sum } from '$lib/utilities/list';
 
 	/**
-	 * @typedef {import('./../types').Category} Category
 	 * @typedef {import('./../types').Expense} Expense
 	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
 	 * @typedef {import('./../types').MonthExpenses} MonthExpenses
 	 */
-
-	/** @type {Expense[]}*/
-	let expenses = [];
-
-	/** @type {Category[]}*/
-	let categories = [];
 
 	/** @type {MonthExpenses}*/
 	let monthExpenses = {};
@@ -38,15 +31,16 @@
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
 
+	$: expenses = $expensesStore;
+
+	$: categories = $categoriesStore;
+
 	// group expenses by month
 	$: monthExpenses = expenses.reduce((/**@type MonthExpenses*/ acc, e) => {
 		const month = localMonthYear(e.date);
 		acc[month] = acc[month] ? [...acc[month], e] : [e];
 		return acc;
 	}, {});
-
-	expensesStore.subscribe((value) => (expenses = value));
-	categoriesStore.subscribe((value) => (categories = value));
 
 	function setNewExpense() {
 		expenseIsNew = true;

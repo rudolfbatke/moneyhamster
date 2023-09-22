@@ -8,20 +8,29 @@
 		/** @param {string} key   */
 		const get = (key) => window.localStorage.getItem(key);
 
-		if ($expensesStore.length === 0) {
-			const expenses = JSON.parse(get('expenses') || '[]');
-			expensesStore.set(sortExpenses(expenses));
-		}
+		/**
+		 *@param {string} key
+		 *@param {string} value
+		 */
+		const set = (key, value) => window.localStorage.setItem(key, value);
 
-		if ($categoriesStore.length === 0) {
-			const categories = JSON.parse(get('categories') || '[]');
-			categoriesStore.set(sortCategories(categories));
-		}
+		const expenses = JSON.parse(get('expenses') || '[]');
+		expensesStore.set(sortExpenses(expenses));
+		expensesStore.subscribe((expenses) => {
+			set('expenses', JSON.stringify(expenses));
+		});
 
-		if ($openListItemsStore.length === 0) {
-			const openListItems = JSON.parse(get('openListItems') || '[]');
-			openListItemsStore.set(openListItems);
-		}
+		const categories = JSON.parse(get('categories') || '[]');
+		categoriesStore.set(sortCategories(categories));
+		categoriesStore.subscribe((categories) => {
+			set('categories', JSON.stringify(categories));
+		});
+
+		const openListItems = JSON.parse(get('openListItems') || '[]');
+		openListItemsStore.set(openListItems);
+		openListItemsStore.subscribe((openListItems) => {
+			set('openListItems', JSON.stringify(openListItems));
+		});
 	}
 </script>
 
