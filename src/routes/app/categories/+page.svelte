@@ -205,7 +205,7 @@
 		position: sticky;
 		top: 0;
 		font-weight: bold;
-		z-index: 4;
+		z-index: 5;
 		background: var(--background-color);
 	}
 
@@ -217,7 +217,6 @@
 		display: flex;
 		width: fit-content;
 		align-items: center;
-		padding: 0 1rem;
 	}
 
 	.category {
@@ -227,11 +226,13 @@
 		z-index: 3;
 		background: var(--background-color);
 		padding: 0.9rem 0;
+		padding-left: 1rem;
 	}
 
 	.cells {
 		display: flex;
 		z-index: 2;
+		padding-right: 1rem;
 	}
 
 	.cell {
