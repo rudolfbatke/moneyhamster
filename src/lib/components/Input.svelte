@@ -13,9 +13,10 @@
 	export let backgroundColor = undefined;
 	export let cursorPointer = false;
 
-	const style = `
+	$: style = `
       cursor: ${cursorPointer ? 'pointer' : 'unset'};
       background-color: ${backgroundColor ? backgroundColor : 'var(--background-color)'};
+      color: ${backgroundColor ? 'black' : 'unset'};
   `;
 </script>
 

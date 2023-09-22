@@ -1,5 +1,4 @@
 <script>
-	import { browser } from '$app/environment';
 	import Button from '$lib/components/Button.svelte';
 	import Dialog from '$lib/components/Dialog.svelte';
 	import Float from '$lib/components/Float.svelte';
@@ -10,9 +9,9 @@
 	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
-	import { expensesStore } from '$lib/stores';
+	import { categoriesStore, expensesStore } from '$lib/stores';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
-	import { sortCategories, sortExpenses, sum } from '$lib/utilities/list';
+	import { sortExpenses, sum } from '$lib/utilities/list';
 
 	/**
 	 * @typedef {import('./../types').Category} Category
@@ -50,6 +49,7 @@
 	}, {});
 
 	expensesStore.subscribe((value) => (expenses = value));
+	categoriesStore.subscribe((value) => (categories = value));
 
 	/**
 	 * Show/hide expenses of a month
@@ -125,12 +125,6 @@
 			return { expense: e, category };
 		});
 		return expenseItems;
-	}
-
-	// load data from local storage
-	if (browser) {
-		const unsortedCategories = JSON.parse(window.localStorage.getItem('categories') || '[]');
-		categories = sortCategories(unsortedCategories);
 	}
 </script>
 

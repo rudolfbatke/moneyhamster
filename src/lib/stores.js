@@ -9,4 +9,4 @@ export const expensesStore = writable(expenses);
 
 /** @type { Category[] } */
 const categories = [];
-export const categories_store = writable(categories);
+export const categoriesStore = writable(categories);
