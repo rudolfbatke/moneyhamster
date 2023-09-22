@@ -9,6 +9,7 @@
 	import { currency, getYearMonth, monthSlashYear } from '$lib/utilities/formatter';
 	import { sortCategories } from '$lib/utilities/list';
 	import { expenses_store, categories_store } from '$lib/stores';
+	import { categoryColors } from '$lib/settings';
 
 	/**
 	 * @typedef {import('./../types').Category} Category
@@ -31,6 +32,9 @@
 
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
+
+	/** open color select dialog */
+	let selectColor = false;
 
 	categories_store.subscribe((value) => (categories = value));
 	expenses_store.subscribe((value) => (expenses = value));
@@ -129,6 +133,18 @@
 				return acc + (monthlyAmount?.total || 0);
 			}, 0);
 	}
+
+	/**
+	 * @param {string|undefined} color
+	 */
+	function setColor(color) {
+		if (!editCategory) return;
+		editCategory = {
+			...editCategory,
+			color
+		};
+		selectColor = false;
+	}
 </script>
 
 <Topbar>Categories</Topbar>
@@ -190,16 +206,39 @@
 			{/each}
 		</div>
 	</div>
+</div>
 
-	{#if editCategory !== undefined}
-		<Dialog onButtonClick={onDialogButtonClick}>
-			<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
-			<form bind:this={form}>
-				<Input label="Name" id="issue" required placeholder="e.g. Food" value={editCategory.name} />
-			</form>
+{#if editCategory !== undefined}
+	<Dialog onButtonClick={onDialogButtonClick}>
+		<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
+		<form bind:this={form}>
+			<Input label="Name" id="issue" required placeholder="e.g. Food" value={editCategory.name} />
+			<Input
+				label="Color"
+				id="color"
+				value={editCategory.color}
+				readonly
+				backgroundColor={editCategory.color}
+				on:click={() => (selectColor = true)}
+			/>
+		</form>
+	</Dialog>
+	{#if selectColor}
+		<Dialog actionButtons={false} onButtonClick={() => (selectColor = false)}>
+			<span slot="title">Pick a Color</span>
+			<div class="color-select">
+				{#each categoryColors as color}
+					<div
+						class="color"
+						style={`background: ${color}`}
+						on:click={() => setColor(color)}
+						on:keypress={() => setColor(color)}
+					/>
+				{/each}
+			</div>
 		</Dialog>
 	{/if}
-</div>
+{/if}
 
 <Float>
 	<Button variant="fill" color="primary" on:click={() => setNewCategory()}>
@@ -254,5 +293,34 @@
 
 	.content > .category {
 		cursor: pointer;
+	}
+
+	.color-select {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+	}
+
+	.color-select > div {
+		width: calc(25%);
+		height: 50px;
+		cursor: pointer;
+	}
+
+	.color:hover {
+		opacity: 0.8;
+	}
+
+	.color:first-child {
+		border-top-left-radius: 1rem;
+	}
+	.color:nth-child(4) {
+		border-top-right-radius: 1rem;
+	}
+	.color:nth-last-child(4) {
+		border-bottom-left-radius: 1rem;
+	}
+	.color:last-child {
+		border-bottom-right-radius: 1rem;
 	}
 </style>

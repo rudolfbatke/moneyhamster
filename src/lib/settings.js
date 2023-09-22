@@ -1,0 +1,22 @@
+export const categoryColors = [
+  'Aqua',
+  'Chartreuse',
+  'Coral',
+  'CornflowerBlue',
+  'DarkCyan',
+  'DarkKhaki',
+  'DarkOrchid',
+  'DarkSeaGreen',
+  'DeepPink',
+  'FireBrick',
+  'ForestGreen',
+  'Fuchsia',
+  'Gold',
+  'GoldenRod',
+  'LightPink',
+  'Plum',
+  'SandyBrown',
+  'Sienna',
+  'Silver',
+  'SlateGray'
+];

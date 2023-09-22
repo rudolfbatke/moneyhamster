@@ -15,6 +15,7 @@
 	export let onButtonClick = () => {};
 
 	export let duplicateButton = false;
+	export let actionButtons = true;
 </script>
 
 <div class="overlay">
@@ -30,19 +31,21 @@
 		<div class="content">
 			<slot />
 		</div>
-		<div class="actions">
-			<Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button>
-			<div>
-				<Button on:click={() => onButtonClick('delete')} color="danger">
-					<DeleteIcon />
-				</Button>
-				{#if duplicateButton}
-					<Button on:click={() => onButtonClick('duplicate')}>
-						<CopyIcon />
+		{#if actionButtons}
+			<div class="actions">
+				<Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button>
+				<div>
+					<Button on:click={() => onButtonClick('delete')} color="danger">
+						<DeleteIcon />
 					</Button>
-				{/if}
+					{#if duplicateButton}
+						<Button on:click={() => onButtonClick('duplicate')}>
+							<CopyIcon />
+						</Button>
+					{/if}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</dialog>
 </div>
 

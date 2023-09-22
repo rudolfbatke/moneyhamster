@@ -9,13 +9,26 @@
 	export let disabled = false;
 	export let readonly = false;
 	export let id = '';
+	/** @type {string|undefined} */
+	export let backgroundColor = undefined;
 </script>
 
 <div>
 	<label for={id}>
 		{label}
 	</label>
-	<input {type} {value} {placeholder} {required} {disabled} {readonly} {id} step="any" />
+	<input
+		{type}
+		{value}
+		{placeholder}
+		{required}
+		{disabled}
+		{readonly}
+		{id}
+		step="any"
+		style={backgroundColor ? `background-color: ${backgroundColor}` : ''}
+		on:click
+	/>
 </div>
 
 <style>
