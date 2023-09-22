@@ -6,11 +6,14 @@
 
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
+	import { currency, getYearMonth, monthSlashYear } from '$lib/utilities/formatter';
 	import { sortCategories } from '$lib/utilities/list';
+	import { expenses_store, categories_store } from '$lib/stores';
 
 	/**
 	 * @typedef {import('./../types').Category} Category
 	 * @typedef {import('./../types').Expense} Expense
+	 * @typedef {import('./../types').CategoryMonthlyAmounts} CategoryMonthlyAmounts
 	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
 	 */
 
@@ -29,6 +32,51 @@
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
 
+	categories_store.subscribe((value) => (categories = value));
+	expenses_store.subscribe((value) => (expenses = value));
+
+	$: categoryMonthlyAmounts = expenses.reduce((/**@type CategoryMonthlyAmounts*/ acc, e) => {
+		const { date: expenseDate, amount: expenseAmount, category: categoryId } = e;
+		const month = getYearMonth(expenseDate);
+		const monthlyAmounts = (acc[categoryId] = acc[categoryId] || {});
+		const monthlyAmount = (monthlyAmounts[month] = monthlyAmounts[month] || {
+			total: 0,
+			expenses: []
+		});
+		monthlyAmount.total += expenseAmount;
+		monthlyAmount.expenses.push(e);
+		return acc;
+	}, {});
+
+	$: months = Object.keys(categoryMonthlyAmounts)
+		.reduce((/** @type {string[]} */ acc, categoryId) => {
+			const monthlyAmounts = categoryMonthlyAmounts[Number(categoryId)];
+			Object.keys(monthlyAmounts).forEach((month) => {
+				if (!acc.includes(month)) acc.push(month);
+			});
+			return acc;
+		}, [])
+		.sort();
+
+	$: years = months
+		.map((m) => m.split('-')[0])
+		.filter((v, i, a) => a.indexOf(v) === i)
+		.sort();
+
+	$: monthlyTotals = months.map((month) => {
+		return categories.reduce((acc, category) => {
+			const monthlyAmounts = categoryMonthlyAmounts[category.id];
+			const monthlyAmount = monthlyAmounts?.[month];
+			return acc + (monthlyAmount?.total || 0);
+		}, 0);
+	});
+
+	$: yearlyTotals = years.map((year) => {
+		return categories.reduce((acc, category) => {
+			return acc + sumYearByCategory(category.id, year);
+		}, 0);
+	});
+
 	function setNewCategory() {
 		categoryIsNew = true;
 		editCategory = {
@@ -42,51 +90,152 @@
 	function onDialogButtonClick(action) {
 		if (editCategory === undefined) return;
 
-		if (action === 'close') {
-			editCategory = undefined;
-			return;
-		}
+		let updatedCategories = [...categories];
 
 		if (action === 'delete') {
-			categories = categories.filter((c) => c.id !== editCategory?.id);
-			editCategory = undefined;
-			return;
+			updatedCategories = categories.filter((c) => c.id !== editCategory?.id);
 		}
 
 		if (action === 'save') {
 			if (!form?.reportValidity()) return;
 			editCategory = {
 				...editCategory,
-				name: form.issue.name,
-				color: form.issue.color
+				name: form.issue.value
+				// color: form.color.value
 			};
 
 			// if new category, add to list of categories and sort
-			const index = categories.findIndex((e) => e.id === editCategory?.id);
+			const index = updatedCategories.findIndex((e) => e.id === editCategory?.id);
 			if (index === -1) {
-				categories = sortCategories([...categories, editCategory]);
+				updatedCategories = sortCategories([...updatedCategories, editCategory]);
 			} else {
-				categories[index] = editCategory;
+				updatedCategories[index] = editCategory;
 			}
-			editCategory = undefined;
-			return;
 		}
+		editCategory = undefined;
+		categories_store.set(updatedCategories);
+	}
+
+	/**
+	 * @param {number} categoryId
+	 * @param {string} year
+	 */
+	function sumYearByCategory(categoryId, year) {
+		return months
+			.filter((m) => m.startsWith(year))
+			.reduce((acc, month) => {
+				const monthlyAmounts = categoryMonthlyAmounts[categoryId];
+				const monthlyAmount = monthlyAmounts?.[month];
+				return acc + (monthlyAmount?.total || 0);
+			}, 0);
 	}
 </script>
 
 <Topbar>Categories</Topbar>
 
-{#if editCategory !== undefined}
-	<Dialog onButtonClick={onDialogButtonClick}>
-		<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
-		<form bind:this={form}>
-			<Input label="Name" id="name" required placeholder="e.g. Food" value={editCategory.name} />
-		</form>
-	</Dialog>
-{/if}
+<div class="table">
+	<div class="header row">
+		<div class="category">Category</div>
+		<div class="cells">
+			{#each months as month}
+				<div class="cell">
+					{monthSlashYear(month)}
+				</div>
+			{/each}
+			{#each years as year}
+				<div class="cell">
+					{year}
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	{#each categories as category}
+		<div class="row">
+			<div class="category" style={`color: ${category.color}`}>{category.name}</div>
+			<div class="cells">
+				{#each months as month}
+					<div class="cell">
+						{currency(categoryMonthlyAmounts[category.id]?.[month]?.total || 0, 0)}
+					</div>
+				{/each}
+				{#each years as year}
+					<div class="cell">
+						{currency(sumYearByCategory(category.id, year), 0)}
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/each}
+
+	<div class="totals row">
+		<div class="category">Totals</div>
+		<div class="cells">
+			{#each monthlyTotals as total}
+				<div class="cell">
+					{currency(total, 0)}
+				</div>
+			{/each}
+			{#each yearlyTotals as total}
+				<div class="cell">
+					{currency(total, 0)}
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	{#if editCategory !== undefined}
+		<Dialog onButtonClick={onDialogButtonClick}>
+			<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
+			<form bind:this={form}>
+				<Input label="Name" id="issue" required placeholder="e.g. Food" value={editCategory.name} />
+			</form>
+		</Dialog>
+	{/if}
+</div>
 
 <Float>
 	<Button variant="fill" color="primary" on:click={() => setNewCategory()}>
 		<AddIcon />
 	</Button>
 </Float>
+
+<style>
+	.header {
+		position: sticky;
+		top: 0;
+		font-weight: bold;
+		z-index: 4;
+		background: var(--background-color);
+	}
+
+	.totals {
+		font-weight: bold;
+	}
+
+	.row {
+		display: flex;
+		width: fit-content;
+		align-items: center;
+	}
+
+	.category {
+		min-width: 7rem;
+		position: sticky;
+		left: 0;
+		z-index: 3;
+		background: var(--background-color);
+		padding: 0.9rem;
+	}
+
+	.cells {
+		display: flex;
+		z-index: 2;
+	}
+
+	.cell {
+		min-width: 4rem;
+		text-align: right;
+		padding: 0.9rem 0;
+	}
+</style>

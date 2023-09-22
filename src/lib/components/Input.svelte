@@ -15,7 +15,6 @@
 	<label for={id}>
 		{label}
 	</label>
-
 	<input {type} {value} {placeholder} {required} {disabled} {readonly} {id} step="any" />
 </div>
 
@@ -28,7 +27,6 @@
 	}
 
 	label {
-		font-size: 1rem;
 		margin-bottom: 0.2rem;
 		color: var(--text-color);
 		padding-left: 0.5rem;

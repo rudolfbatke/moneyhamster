@@ -55,7 +55,7 @@ export const localMonthYear = (date) => `${localMonth(date)} ${localYear(date)}`
 /**
  * Format a date to a local month and year string (01/2001)
  *
- * @param {Date} date}
+ * @param {Date|string} date}
  */
 export const monthSlashYear = (date) =>
   new Date(date).toLocaleString(undefined, { month: '2-digit', year: '2-digit' });
@@ -71,12 +71,13 @@ export const daySlashMonthSlashYear = (date) =>
 /**
  * Format a date to a year and month dash string (2001-01)
  *
- * @param {Date} date}
+ * @param {Date|string} date}
+ * @returns {import("../../routes/app/types").Month}
  */
 export const getYearMonth = (date) => {
   const dateObj = new Date(date);
   const year = dateObj.getFullYear();
   const monthString = String(dateObj.getMonth() + 1);
   const month = monthString.length === 1 ? `0${monthString}` : monthString;
-  return `${year}-${month}`;
+  return `${year}-${Number(month)}`;
 };

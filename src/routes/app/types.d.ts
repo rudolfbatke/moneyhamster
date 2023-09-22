@@ -45,8 +45,8 @@ export interface Changelog {
   changes: string[];
 }
 
-export type Month = `${Year}-${number}`; // 2021-01
-export type Year = `${number}`; // 2021
+export type Month = string; // 2021-01
+export type Year = string; // 2021
 export type CategoryId = number;
 export type Amount = number;
 export type MonthlyAmount = {
@@ -54,5 +54,5 @@ export type MonthlyAmount = {
   expenses: Expense[];
 };
 
-export type MonthlyAmounts = Map<Month, MonthlyAmount>;
-export type CategoryMonthlyAmounts = Map<CategoryId, MonthlyAmounts>;
+export type MonthlyAmounts = { [key: Month]: MonthlyAmount };
+export type CategoryMonthlyAmounts = { [key: CategoryId]: MonthlyAmounts };

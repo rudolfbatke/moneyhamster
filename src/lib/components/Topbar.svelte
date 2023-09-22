@@ -9,15 +9,15 @@
 	header {
 		display: flex;
 		justify-content: space-between;
-		padding: 0 1rem;
 		align-items: center;
-		position: sticky;
 		background-color: var(--background-color);
-		top: 0;
 		border-bottom: 1px solid var(--border-color);
-		min-height: 3rem;
 	}
+
 	h1 {
-		margin: 0.9rem 0 0 0;
+		position: sticky;
+		left: 0;
+		margin: 0.9rem 0 0.3rem 0;
+		padding: 0 1rem;
 	}
 </style>

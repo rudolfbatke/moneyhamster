@@ -67,10 +67,7 @@
 		border-radius: 1.5rem;
 		z-index: 1000;
 		border: 1px solid var(--border-color);
-	}
-
-	.title {
-		width: 321px;
+		width: 500px;
 	}
 
 	.title {
