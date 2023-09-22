@@ -2,6 +2,7 @@
 	import SellIcon from '$lib/icons/SellIcon.svelte';
 	import ShoppingCartIcon from '$lib/icons/ShoppingCartIcon.svelte';
 	import { page } from '$app/stores';
+	import MonitoringIcon from '$lib/icons/MonitoringIcon.svelte';
 
 	let pathname = '';
 
@@ -19,6 +20,11 @@
 			name: 'Categories',
 			path: '/app/categories',
 			icon: SellIcon
+		},
+		{
+			name: 'Charts',
+			path: '/app/charts',
+			icon: MonitoringIcon
 		}
 	];
 </script>
