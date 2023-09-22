@@ -220,6 +220,7 @@
 				readonly
 				backgroundColor={editCategory.color}
 				on:click={() => (selectColor = true)}
+				cursorPointer
 			/>
 		</form>
 	</Dialog>
@@ -247,6 +248,10 @@
 </Float>
 
 <style>
+	.table {
+		width: fit-content;
+	}
+
 	.header {
 		position: sticky;
 		top: 0;
@@ -256,6 +261,12 @@
 	.header,
 	.totals {
 		font-weight: bold;
+	}
+
+	.totals {
+		position: sticky;
+		bottom: 0;
+		z-index: 4;
 	}
 
 	.row {
@@ -283,6 +294,7 @@
 
 	.category.cell {
 		width: 6rem;
+		min-width: 6rem;
 		position: sticky;
 		left: 0;
 		z-index: 3;

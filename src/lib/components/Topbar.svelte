@@ -8,6 +8,8 @@
 <style>
 	header {
 		display: flex;
+		position: sticky;
+		left: 0;
 		justify-content: space-between;
 		align-items: center;
 		background-color: var(--background-color);
@@ -15,8 +17,6 @@
 	}
 
 	h1 {
-		position: sticky;
-		left: 0;
 		margin: 0.9rem 0 0.3rem 0;
 		padding: 0 1rem;
 	}

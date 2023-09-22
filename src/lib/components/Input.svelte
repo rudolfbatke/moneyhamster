@@ -11,6 +11,12 @@
 	export let id = '';
 	/** @type {string|undefined} */
 	export let backgroundColor = undefined;
+	export let cursorPointer = false;
+
+	const style = `
+      cursor: ${cursorPointer ? 'pointer' : 'unset'};
+      background-color: ${backgroundColor ? backgroundColor : 'var(--background-color)'};
+  `;
 </script>
 
 <div>
@@ -26,7 +32,7 @@
 		{readonly}
 		{id}
 		step="any"
-		style={backgroundColor ? `background-color: ${backgroundColor}` : ''}
+		{style}
 		on:click
 	/>
 </div>

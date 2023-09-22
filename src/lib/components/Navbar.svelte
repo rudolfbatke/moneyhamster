@@ -35,10 +35,6 @@
 
 <style>
 	nav {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
@@ -46,7 +42,8 @@
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
 		z-index: 10;
 		border-top: 1px solid var(--border-color);
-		opacity: 0.8;
+		height: 3.6rem;
+		width: 100%;
 	}
 
 	a {
@@ -57,7 +54,7 @@
 		color: var(--text-color);
 		font-size: 0.8rem;
 		padding: 0.5rem;
-		opacity: 0.8;
+		opacity: 0.7;
 	}
 
 	.active {
