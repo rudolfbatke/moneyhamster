@@ -9,7 +9,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
-	import { categoriesStore, expensesStore } from '$lib/stores';
+	import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
 	import { sortExpenses, sum } from '$lib/utilities/list';
 
@@ -29,9 +29,6 @@
 	/** @type {MonthExpenses}*/
 	let monthExpenses = {};
 
-	/** @type {string[]}*/
-	let openLineItems = [];
-
 	/** @type {Expense | undefined}*/
 	let editExpense = undefined;
 
@@ -50,19 +47,6 @@
 
 	expensesStore.subscribe((value) => (expenses = value));
 	categoriesStore.subscribe((value) => (categories = value));
-
-	/**
-	 * Show/hide expenses of a month
-	 *
-	 * @param {string} month
-	 */
-	function toggleExpenses(month) {
-		if (openLineItems.includes(month)) {
-			openLineItems = openLineItems.filter((m) => m !== month);
-		} else {
-			openLineItems = [...openLineItems, month];
-		}
-	}
 
 	function setNewExpense() {
 		expenseIsNew = true;
@@ -132,15 +116,14 @@
 
 <List>
 	{#each Object.entries(monthExpenses) as [month, expenses]}
-		<ListItem sticky border on:click={() => toggleExpenses(month)}>
+		<ListItem sticky border on:click={() => openListItemsStore.toggle(month)}>
 			<span>{month}</span>
 			<span slot="end">{currency(sum(expenses))}</span>
 		</ListItem>
-		{#if openLineItems.includes(month)}
+		{#if $openListItemsStore.includes(month)}
 			{#each getExpenseItems(expenses) as { expense, category }}
 				<ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))}>
-					{localDate(expense.date)}
-					{expense.issue}
+					{`${localDate(expense.date)} ${expense.issue}`}
 					<span slot="sub" style:color={category?.color}>{category?.name}</span>
 					<span slot="end">{currency(expense.amount)}</span>
 				</ListItem>

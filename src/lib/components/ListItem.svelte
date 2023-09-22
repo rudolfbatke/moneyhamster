@@ -1,4 +1,6 @@
 <script>
+	// TODO: check if this component is still used by many other components
+
 	export let border = false;
 	export let sticky = false;
 	export let lucent = false;

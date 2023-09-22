@@ -1,15 +1,27 @@
 <script>
 	import { browser } from '$app/environment';
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { expensesStore, categoriesStore } from '$lib/stores';
+	import { expensesStore, categoriesStore, openListItemsStore } from '$lib/stores';
 	import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
 	if (browser) {
-		const expenses = JSON.parse(window.localStorage.getItem('expenses') || '[]');
-		expensesStore.set(sortExpenses(expenses));
+		/** @param {string} key   */
+		const get = (key) => window.localStorage.getItem(key);
 
-		const categories = JSON.parse(window.localStorage.getItem('categories') || '[]');
-		categoriesStore.set(sortCategories(categories));
+		if ($expensesStore.length === 0) {
+			const expenses = JSON.parse(get('expenses') || '[]');
+			expensesStore.set(sortExpenses(expenses));
+		}
+
+		if ($categoriesStore.length === 0) {
+			const categories = JSON.parse(get('categories') || '[]');
+			categoriesStore.set(sortCategories(categories));
+		}
+
+		if ($openListItemsStore.length === 0) {
+			const openListItems = JSON.parse(get('openListItems') || '[]');
+			openListItemsStore.set(openListItems);
+		}
 	}
 </script>
 
