@@ -217,6 +217,7 @@
 		display: flex;
 		width: fit-content;
 		align-items: center;
+		padding: 0 1rem;
 	}
 
 	.category {
@@ -225,7 +226,7 @@
 		left: 0;
 		z-index: 3;
 		background: var(--background-color);
-		padding: 0.9rem;
+		padding: 0.9rem 0;
 	}
 
 	.cells {
