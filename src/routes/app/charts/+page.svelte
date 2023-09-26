@@ -7,6 +7,7 @@
 	import ExpendLessIcon from '$lib/icons/ExpendLessIcon.svelte';
 	import ExpendMoreIcon from '$lib/icons/ExpendMoreIcon.svelte';
 	import LineChart from '$lib/components/LineChart.svelte';
+	import PieChart from '$lib/components/PieChart.svelte';
 
 	$: openListItems = $openListItemsStore;
 
@@ -18,6 +19,10 @@
 		{
 			name: 'Line Chart',
 			component: LineChart
+		},
+		{
+			name: 'Pie Chart',
+			component: PieChart
 		}
 	];
 </script>
