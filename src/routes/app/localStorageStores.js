@@ -41,7 +41,7 @@ export function setAndSupscribeStores() {
     set('monthBarchart', JSON.stringify(monthBarchart));
   });
 
-  const lineChartCategories = JSON.parse(get('lineChartCategories') || '[1]');
+  const lineChartCategories = JSON.parse(get('lineChartCategories') || '[]');
   lineChartCategoriesStore.set(lineChartCategories);
   lineChartCategoriesStore.subscribe((lineChartCategories) => {
     set('lineChartCategories', JSON.stringify(lineChartCategories));

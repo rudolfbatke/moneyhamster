@@ -14,6 +14,7 @@
 		LineController
 	} from 'chart.js';
 	import { onMount } from 'svelte';
+	import Select from './Select.svelte';
 
 	ChartJS.register(
 		Title,
@@ -32,6 +33,9 @@
 	/** @type {ChartJS} */
 	let chart;
 
+	/** @type {HTMLFormElement|undefined} */
+	let form;
+
 	const monthsToDisplay = 6;
 
 	$: expenses = $expensesStore;
@@ -43,6 +47,8 @@
 	$: months = Object.keys(monthExpenses).slice(0, monthsToDisplay);
 
 	$: lineChartCategories = $lineChartCategoriesStore;
+
+	$: selectableCategories = categories.filter((c) => !lineChartCategories.includes(c.id));
 
 	$: chartDataLabels = months.map((month) => monthSlashYear(month));
 
@@ -93,6 +99,13 @@
 			}
 		}
 	};
+
+	/** @param {number} id */
+	function addCategory(id) {
+		lineChartCategoriesStore.update((categories) => [...categories, id]);
+		// @ts-ignore
+		if (form) form.elements['category-select'].value = '';
+	}
 </script>
 
 <div class="bar-chart">
@@ -103,6 +116,17 @@
 		</p>
 		<p>The chart is interactive. You can click on the chart to see the exact amount for a month.</p>
 	</div>
+	<form bind:this={form}>
+		<Select
+			id="category-select"
+			placeholder="Select a category"
+			on:change={(/** @type {any} */ { target }) => addCategory(Number(target.value))}
+		>
+			{#each selectableCategories as category}
+				<option value={category.id}>{category.name}</option>
+			{/each}
+		</Select>
+	</form>
 	<div class="chart-container">
 		<canvas bind:this={chartCanvas} id="bar-chart" />
 	</div>

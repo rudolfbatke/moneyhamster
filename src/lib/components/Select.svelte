@@ -9,9 +9,11 @@
 </script>
 
 <div>
-	<label for={id}>
-		{label}
-	</label>
+	{#if label}
+		<label for={id}>
+			{label}
+		</label>
+	{/if}
 
 	<select {value} {placeholder} {required} {disabled} {id} on:change>
 		<option disabled selected value>{placeholder}</option>
