@@ -122,9 +122,9 @@
 	<Dialog onButtonClick={onDialogButtonClick} duplicateButton>
 		<span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
 		<form bind:this={form}>
-			<Input label="Date" id="date" type="date" required value={editExpense.date || today()} />
+			<Input label="Date:" id="date" type="date" required value={editExpense.date || today()} />
 			<Input
-				label="Issue"
+				label="Issue:"
 				id="issue"
 				type="text"
 				required
@@ -132,7 +132,7 @@
 				value={editExpense.issue}
 			/>
 			<Input
-				label="Cost amount"
+				label="Cost amount:"
 				id="amount"
 				type="number"
 				required
@@ -140,7 +140,7 @@
 				value={editExpense.amount || ''}
 			/>
 			<Select
-				label="Category"
+				label="Category:"
 				id="category"
 				value={editExpense.category || ''}
 				placeholder="select a category"

@@ -1,6 +1,7 @@
 :root {
 	--background-color: #ffffff;
 	--background-hover: #f5f5f5;
+	--background-light: #f8f9fa;
 	--text-color: #000000;
 	--text-light: #6c757d;
 	--text-hover: #2f2f2f;
@@ -18,6 +19,7 @@
 	:root {
 		--background-color: #1f1f1f;
 		--background-hover: #2f2f2f;
+		--background-light: #2f2f2f;
 		--text-color: #ffffff;
 		--text-light: #6c757d;
 		--text-hover: #f5f5f5;

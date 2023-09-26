@@ -117,7 +117,7 @@
 		<p>To see the amount of a single category, click no the bar.</p>
 	</div>
 	<Select
-		label="Month"
+		label="Month:"
 		id="month"
 		value={selectedMonth || ''}
 		placeholder="Select a month"

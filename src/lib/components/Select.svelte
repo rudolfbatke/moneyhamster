@@ -22,25 +22,29 @@
 <style>
 	div {
 		display: flex;
-		flex-direction: column;
 		color: var(--text-color);
 		padding-bottom: 1rem;
+		align-items: center;
+	}
+
+	label,
+	select {
+		font-size: 1rem;
 	}
 
 	label {
-		font-size: 1rem;
-		margin-bottom: 0.2rem;
-		color: var(--text-color);
-		padding-left: 0.5rem;
+		margin-right: 0.5rem;
+		padding-top: 0.1rem;
+		color: var(--text-light);
 	}
 
 	select {
+		color: var(--text-color);
+		flex-grow: 1;
 		border: 1px solid var(--border-color);
 		border-radius: 1rem;
 		padding: 0.5rem;
-		font-size: 1rem;
 		background-color: var(--background-color);
-		color: var(--text-color);
 	}
 
 	select:focus {
