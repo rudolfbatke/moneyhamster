@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
-/** @typedef {import('../routes/app/types').Expense} Expense */
-/** @typedef {import('../routes/app/types').Category} Category */
+/** @typedef {import('$lib/types').Expense} Expense */
+/** @typedef {import('$lib/types').Category} Category */
 
 /** @type { Expense[] } */
 const expenses = [];
@@ -10,6 +10,8 @@ export const expensesStore = writable(expenses);
 /** @type { Category[] } */
 const categories = [];
 export const categoriesStore = writable(categories);
+
+export const monthBarchartStore = writable('');
 
 /** @type { string[] } */
 const openListItems = [];

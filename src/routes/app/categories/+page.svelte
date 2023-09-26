@@ -12,9 +12,9 @@
 	import { categoryColors } from '$lib/settings';
 
 	/**
-	 * @typedef {import('./../types').Category} Category
-	 * @typedef {import('./../types').CategoryMonthlyAmounts} CategoryMonthlyAmounts
-	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
+	 * @typedef {import('$lib/types').Category} Category
+	 * @typedef {import('$lib/types').CategoryMonthlyAmounts} CategoryMonthlyAmounts
+	 * @typedef {import('$lib/components/types').DialogAction} DialogAction
 	 */
 
 	/** @type {Category | undefined}*/

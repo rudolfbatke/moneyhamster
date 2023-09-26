@@ -1,7 +1,12 @@
 <script>
 	import { browser } from '$app/environment';
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { expensesStore, categoriesStore, openListItemsStore } from '$lib/stores';
+	import {
+		expensesStore,
+		categoriesStore,
+		openListItemsStore,
+		monthBarchartStore
+	} from '$lib/stores';
 	import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
 	if (browser) {
@@ -30,6 +35,12 @@
 		openListItemsStore.set(openListItems);
 		openListItemsStore.subscribe((openListItems) => {
 			set('openListItems', JSON.stringify(openListItems));
+		});
+
+		const monthBarchart = JSON.parse(get('monthBarchart') || '""');
+		monthBarchartStore.set(monthBarchart);
+		monthBarchartStore.subscribe((monthBarchart) => {
+			set('monthBarchart', JSON.stringify(monthBarchart));
 		});
 	}
 </script>

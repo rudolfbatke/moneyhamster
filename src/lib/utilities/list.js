@@ -1,10 +1,11 @@
-import { daySlashMonthSlashYear } from './formatter';
+import { daySlashMonthSlashYear, getYearMonth } from './formatter';
 import { maxBy, sortBy } from 'lodash';
 
 /**
- * @typedef {import('../../routes/app/types').Expense} Expense
- * @typedef {import('../../routes/app/types').Category} Category
- * @typedef {import('../../routes/app/types').Entity} Entity
+ * @typedef {import('$lib/types').Expense} Expense
+ * @typedef {import('$lib/types').Category} Category
+ * @typedef {import('$lib/types').Entity} Entity
+ * @typedef {import('$lib/types').MonthExpenses} MonthExpenses
  */
 
 /** @param {Entity[]} entities */
@@ -27,11 +28,22 @@ export const sortExpenses = (expenses) => sortBy(expenses, ['date', 'issue']).re
 
 /** @param {Category[]} categories */
 export const sortCategories = (categories) =>
-	categories.sort((a, b) => a.name.localeCompare(b.name));
+  categories.sort((a, b) => a.name.localeCompare(b.name));
 
 /** @param {Expense} expense */
 export const getExpenseLabel = (expense) =>
-	`${daySlashMonthSlashYear(expense.date)} ${expense.issue}`;
+  `${daySlashMonthSlashYear(expense.date)} ${expense.issue}`;
 
 /** @param {Expense[]} expenses */
 export const sum = (expenses) => expenses.reduce((acc, e) => acc + e.amount, 0);
+
+/**
+ * group expenses by month
+ * @param {Expense[]} expenses
+ */
+export const getMonthExpenses = (expenses) =>
+  expenses.reduce((/**@type MonthExpenses*/ acc, e) => {
+    const month = getYearMonth(e.date);
+    acc[month] = acc[month] ? [...acc[month], e] : [e];
+    return acc;
+  }, {});

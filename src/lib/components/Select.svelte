@@ -13,7 +13,7 @@
 		{label}
 	</label>
 
-	<select {value} {placeholder} {required} {disabled} {id}>
+	<select {value} {placeholder} {required} {disabled} {id} on:change>
 		<option disabled selected value>{placeholder}</option>
 		<slot />
 	</select>

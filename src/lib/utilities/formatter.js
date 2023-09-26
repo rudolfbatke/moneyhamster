@@ -72,7 +72,7 @@ export const daySlashMonthSlashYear = (date) =>
  * Format a date to a year and month dash string (2001-01)
  *
  * @param {Date|string} date}
- * @returns {import("../../routes/app/types").Month}
+ * @returns {import('$lib/types').Month}
  */
 export const getYearMonth = (date) => {
   const dateObj = new Date(date);

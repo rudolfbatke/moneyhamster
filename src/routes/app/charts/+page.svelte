@@ -1,20 +1,17 @@
 <script>
+	import BarChart from '$lib/components/BarChart.svelte';
+	import ListItem from '$lib/components/ListItem.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
-	import { expensesStore, categoriesStore } from '$lib/stores';
-
-	/**
-	 * @typedef {import('./../types').Category} Category
-	 * @typedef {import('./../types').Expense} Expense
-	 */
-
-	/** @type {Expense[]}*/
-	let expenses = [];
-
-	/** @type {Category[]}*/
-	let categories = [];
-
-	categoriesStore.subscribe((value) => (categories = value));
-	expensesStore.subscribe((value) => (expenses = value));
 </script>
 
 <Topbar>Charts</Topbar>
+<ListItem border>Barchart</ListItem>
+<div class="chart-content">
+	<BarChart />
+</div>
+
+<style>
+	.chart-content {
+		padding: 0 1rem;
+	}
+</style>

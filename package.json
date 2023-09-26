@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"chart.js": "^4.4.0",
 		"lodash": "^4.17.21"
 	}
 }

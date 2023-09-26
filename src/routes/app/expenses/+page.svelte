@@ -11,16 +11,12 @@
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
-	import { sortExpenses, sum } from '$lib/utilities/list';
+	import { getMonthExpenses, sortExpenses, sum } from '$lib/utilities/list';
 
 	/**
-	 * @typedef {import('./../types').Expense} Expense
-	 * @typedef {import('../../../lib/components/types').DialogAction} DialogAction
-	 * @typedef {import('./../types').MonthExpenses} MonthExpenses
+	 * @typedef {import('$lib/types').Expense} Expense
+	 * @typedef {import('$lib/components/types').DialogAction} DialogAction
 	 */
-
-	/** @type {MonthExpenses}*/
-	let monthExpenses = {};
 
 	/** @type {Expense | undefined}*/
 	let editExpense = undefined;
@@ -36,11 +32,7 @@
 	$: categories = $categoriesStore;
 
 	// group expenses by month
-	$: monthExpenses = expenses.reduce((/**@type MonthExpenses*/ acc, e) => {
-		const month = localMonthYear(e.date);
-		acc[month] = acc[month] ? [...acc[month], e] : [e];
-		return acc;
-	}, {});
+	$: monthExpenses = getMonthExpenses(expenses);
 
 	function setNewExpense() {
 		expenseIsNew = true;
@@ -111,7 +103,7 @@
 <List>
 	{#each Object.entries(monthExpenses) as [month, expenses]}
 		<ListItem sticky border on:click={() => openListItemsStore.toggle(month)}>
-			<span>{month}</span>
+			<span>{localMonthYear(month)}</span>
 			<span slot="end">{currency(sum(expenses))}</span>
 		</ListItem>
 		{#if $openListItemsStore.includes(month)}
