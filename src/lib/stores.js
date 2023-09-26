@@ -11,6 +11,10 @@ export const expensesStore = writable(expenses);
 const categories = [];
 export const categoriesStore = writable(categories);
 
+/** @type { number[] } */
+const lineChartCategories = [];
+export const lineChartCategoriesStore = writable(lineChartCategories);
+
 export const monthBarchartStore = writable('');
 
 /** @type { string[] } */

@@ -47,3 +47,20 @@ export const getMonthExpenses = (expenses) =>
     acc[month] = acc[month] ? [...acc[month], e] : [e];
     return acc;
   }, {});
+
+/**
+ *    @param {number} category
+ *    @param {Expense[]} expenses
+ */
+export const amountsByCategory = (category, expenses) =>
+  expenses.filter((e) => e.category === category).map((e) => e.amount);
+
+/** @param {number[]} amounts */
+export const sumAmounts = (amounts) => amounts.reduce((a, b) => a + b, 0);
+
+/**
+ * @param {Category} category
+ * @param {Expense[]} expenses
+ */
+export const sumByCategory = (category, expenses) =>
+  sumAmounts(amountsByCategory(category.id, expenses));

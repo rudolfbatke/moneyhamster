@@ -1,7 +1,7 @@
 <script>
 	import { expensesStore, categoriesStore, monthBarchartStore } from '$lib/stores';
 	import { currency, localMonthYear } from '$lib/utilities/formatter';
-	import { getMonthExpenses } from '$lib/utilities/list';
+	import { getMonthExpenses, sumByCategory } from '$lib/utilities/list';
 	import Select from '$lib/components/Select.svelte';
 	import {
 		Chart as ChartJS,
@@ -16,7 +16,6 @@
 	import { onMount } from 'svelte';
 
 	/** @typedef {import('$lib/types').Expense} Expense */
-	/** @typedef {import('$lib/types').Category} Category */
 
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController);
 
@@ -86,29 +85,12 @@
 		}
 	};
 
-	/**
-	 *    @param {number} category
-	 *    @param {Expense[]} expenses
-	 */
-	const amountsByCategory = (category, expenses) =>
-		expenses.filter((e) => e.category === category).map((e) => e.amount);
-
-	/** @param {number[]} amounts */
-	const sumAmounts = (amounts) => amounts.reduce((a, b) => a + b, 0);
-
-	/**
-	 * @param {Category} category
-	 * @param {Expense[]} expenses
-	 */
-	const sumByCategory = (category, expenses) =>
-		sumAmounts(amountsByCategory(category.id, expenses));
-
 	/** @param {Expense[]} expenses */
 	const totalAmount = (expenses) => expenses.reduce((a, b) => a + b.amount, 0);
 </script>
 
 <div class="bar-chart">
-	<div class="bar-chart-text">
+	<div class="bar-chart-description">
 		<p>
 			The total amount of expenses for {localMonthYear(selectedMonth)} is
 			<strong> {currency(totalAmount(monthExpenses[selectedMonth] || []), 0)}. </strong>
@@ -133,7 +115,7 @@
 </div>
 
 <style>
-	.bar-chart-text {
+	.bar-chart-description {
 		opacity: 0.81;
 	}
 </style>
