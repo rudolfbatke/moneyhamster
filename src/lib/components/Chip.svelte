@@ -29,8 +29,8 @@
 	}
 
 	.label {
-		padding-top: 0.2rem;
-		font-size: 1rem;
+		padding-top: 0.1rem;
+		font-size: 0.9rem;
 	}
 
 	.icon {
