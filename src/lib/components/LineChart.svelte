@@ -31,7 +31,7 @@
 	/** @type {HTMLCanvasElement} */
 	let chartCanvas;
 
-	/** @type {ChartJS} */
+	/** @type {ChartJS<'line'>} */
 	let chart;
 
 	/** @type {HTMLFormElement|undefined} */
