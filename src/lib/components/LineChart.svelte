@@ -15,6 +15,7 @@
 	} from 'chart.js';
 	import { onMount } from 'svelte';
 	import Select from './Select.svelte';
+	import Chip from './Chip.svelte';
 
 	ChartJS.register(
 		Title,
@@ -54,7 +55,7 @@
 
 	/** @type {import('chart.js').ChartDataset<'line'>[]} */
 	$: chartDataSets = lineChartCategories.map((id) => {
-		const category = categories.find((c) => c.id === id);
+		const category = getCategory(id);
 		return {
 			label: category?.name || '',
 			borderColor: category?.color || 'gray',
@@ -101,10 +102,20 @@
 	};
 
 	/** @param {number} id */
+	function getCategory(id) {
+		return categories.find((c) => c.id === id);
+	}
+
+	/** @param {number} id */
 	function addCategory(id) {
 		lineChartCategoriesStore.update((categories) => [...categories, id]);
 		// @ts-ignore
 		if (form) form.elements['category-select'].value = '';
+	}
+
+	/** @param {number} id */
+	function removeCategory(id) {
+		lineChartCategoriesStore.update((categories) => categories.filter((c) => c !== id));
 	}
 </script>
 
@@ -116,6 +127,7 @@
 		</p>
 		<p>The chart is interactive. You can click on the chart to see the exact amount for a month.</p>
 	</div>
+
 	<form bind:this={form}>
 		<Select
 			id="category-select"
@@ -127,8 +139,22 @@
 			{/each}
 		</Select>
 	</form>
+
 	<div class="chart-container">
 		<canvas bind:this={chartCanvas} id="bar-chart" />
+	</div>
+
+	<div class="chip-container">
+		{#each lineChartCategories.map(getCategory) as category}
+			<Chip
+				label={category?.name}
+				color={category?.color}
+				remove
+				on:click={() => {
+					if (category) removeCategory(category.id);
+				}}
+			/>
+		{/each}
 	</div>
 </div>
 
@@ -140,5 +166,12 @@
 	.chart-container {
 		height: 300px;
 		width: 100%;
+	}
+
+	.chip-container {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 1rem;
+		gap: 0.5rem;
 	}
 </style>
