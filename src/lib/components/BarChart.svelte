@@ -108,7 +108,7 @@
 </script>
 
 <div class="bar-chart">
-	<div>
+	<div class="bar-chart-text">
 		<p>
 			The total amount of expenses for {localMonthYear(selectedMonth)} is
 			<strong> {currency(totalAmount(monthExpenses[selectedMonth] || []), 0)}. </strong>
@@ -131,3 +131,9 @@
 		<canvas bind:this={chartCanvas} id="bar-chart" />
 	</div>
 </div>
+
+<style>
+	.bar-chart-text {
+		opacity: 0.81;
+	}
+</style>
