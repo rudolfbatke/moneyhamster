@@ -1,5 +1,5 @@
-<div class="story">
-	<p>My friend had a hamster.</p>
+<div>
+	My friend had a hamster.
 	<p>
 		Now, it is known that hamsters do not live very long, and this hamster is dead since decades.
 	</p>
@@ -20,10 +20,3 @@
 	<p>May it help you to detect the loss!</p>
 	<p>Founder & Team of hamster.cash</p>
 </div>
-
-<style>
-	.story {
-		margin: 1em;
-		opacity: 0.72;
-	}
-</style>

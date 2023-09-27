@@ -46,11 +46,9 @@
 	}
 </script>
 
-<div class="backup">
-	<p>
-		The app is using the browser's local storage to store the data. This means that the data is
-		stored on your device and not on a server.
-	</p>
+<div>
+	The app is using the browser's local storage to store the data. This means that the data is stored
+	on your device and not on a server.
 	<p>
 		If you want to backup your data, you can use the export function. This will create a file
 		containing all your data:
@@ -80,11 +78,6 @@
 </Alert>
 
 <style>
-	.backup {
-		margin: 1em;
-		opacity: 0.72;
-	}
-
 	.backup-button {
 		text-align: center;
 		margin-bottom: 2em;
