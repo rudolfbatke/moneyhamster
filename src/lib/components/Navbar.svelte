@@ -56,6 +56,7 @@
 		border-top: 1px solid var(--border-color);
 		height: 3.6rem;
 		width: 100%;
+		border-radius: 1rem 1rem 0 0;
 	}
 
 	a {

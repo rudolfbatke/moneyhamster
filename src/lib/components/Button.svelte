@@ -51,6 +51,10 @@
 		--button-text-color: var(--background-color);
 	}
 
+	.outline {
+		--button-border-color: var(--text-color);
+	}
+
 	.fill:hover {
 		--button-background-hover: var(--text-hover);
 	}

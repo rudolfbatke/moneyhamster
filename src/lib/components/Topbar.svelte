@@ -14,6 +14,7 @@
 		align-items: center;
 		background-color: var(--background-color);
 		border-bottom: 1px solid var(--border-color);
+		border-radius: 0 0 1rem 1rem;
 	}
 
 	h1 {

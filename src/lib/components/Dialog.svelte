@@ -4,7 +4,7 @@
 	import CopyIcon from '$lib/icons/CopyIcon.svelte';
 	import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
 
-	/** @typedef {import('./types').DialogAction} DialogAction*/
+	/** @typedef {import('$lib/types').DialogAction} DialogAction*/
 
 	/**
 	 * Executed when the user clicks on a button

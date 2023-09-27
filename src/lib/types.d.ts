@@ -56,3 +56,5 @@ export type MonthlyAmount = {
 
 export type MonthlyAmounts = { [key: Month]: MonthlyAmount };
 export type CategoryMonthlyAmounts = { [key: CategoryId]: MonthlyAmounts };
+
+export type DialogAction = 'close' | 'save' | 'delete' | 'duplicate';

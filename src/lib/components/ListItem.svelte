@@ -5,9 +5,10 @@
 	export let sticky = false;
 	export let lucent = false;
 	export let highlighted = false;
+	export let hover = false;
 </script>
 
-<li class:highlighted class:border class:sticky class:lucent on:click on:keypress>
+<li class:hover class:highlighted class:border class:sticky class:lucent on:click on:keypress>
 	<span>
 		<slot />
 		<div>
@@ -24,13 +25,12 @@
 		padding: 0 1rem;
 		padding-top: 0.4rem;
 		align-items: center;
-		cursor: pointer;
 		background-color: var(--background-color);
 		height: 2rem;
 	}
 
-	li:hover {
-		background-color: var(--background-hover);
+	.hover {
+		cursor: pointer;
 	}
 
 	div {
