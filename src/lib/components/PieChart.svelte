@@ -6,8 +6,6 @@
 	import { Chart as ChartJS, Tooltip, Legend, ArcElement, PieController } from 'chart.js';
 	import { onMount } from 'svelte';
 
-	/** @typedef {import('$lib/types').Expense} Expense */
-
 	ChartJS.register(ArcElement, Tooltip, Legend, PieController);
 
 	/** @type {HTMLCanvasElement} */
@@ -72,33 +70,25 @@
 	const totalAmount = (expenses) => expenses.reduce((a, b) => a + b.amount, 0);
 </script>
 
-<div class="pie-chart">
-	<div class="pie-chart-description">
-		<p>The following chart shows the distribution of expenses for this month.</p>
-		<p>The chart is interactive. You can hover or click on the chart to see more details.</p>
-		<Select
-			label="Month:"
-			id="month"
-			value={selectedMonth || ''}
-			placeholder="Select a month"
-			on:change={(/** @type {any} */ { target }) => monthBarchartStore.set(target.value)}
-		>
-			{#each months as month}
-				<option value={month}>{localMonthYear(month)}</option>
-			{/each}
-		</Select>
-		<p>
-			The total amount of expenses for {localMonthYear(selectedMonth)} is
-			<strong> {currency(totalAmount(monthExpenses[selectedMonth]), 0)}. </strong>
-		</p>
-	</div>
-	<div class="chart-container" style={`height: ${categories.length * 27}px`}>
-		<canvas bind:this={chartCanvas} id="pie-chart" />
-	</div>
+<div>
+	The following chart shows the distribution of expenses for this month.
+	<p>The chart is interactive. You can hover or click on the chart to see more details.</p>
+	<Select
+		label="Month:"
+		id="month"
+		value={selectedMonth || ''}
+		placeholder="Select a month"
+		on:change={(/** @type {any} */ { target }) => monthBarchartStore.set(target.value)}
+	>
+		{#each months as month}
+			<option value={month}>{localMonthYear(month)}</option>
+		{/each}
+	</Select>
+	<p>
+		The total amount of expenses for {localMonthYear(selectedMonth)} is
+		<strong> {currency(totalAmount(monthExpenses[selectedMonth]), 0)}. </strong>
+	</p>
 </div>
-
-<style>
-	.pie-chart-description {
-		opacity: 0.81;
-	}
-</style>
+<div class="chart-container" style={`height: ${categories.length * 27}px`}>
+	<canvas bind:this={chartCanvas} id="pie-chart" />
+</div>

@@ -15,8 +15,6 @@
 	} from 'chart.js';
 	import { onMount } from 'svelte';
 
-	/** @typedef {import('$lib/types').Expense} Expense */
-
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController);
 
 	/** @type {HTMLCanvasElement} */
@@ -89,33 +87,25 @@
 	const totalAmount = (expenses) => expenses.reduce((a, b) => a + b.amount, 0);
 </script>
 
-<div class="bar-chart">
-	<div class="bar-chart-description">
-		<p>The following chart shows the amount of expenses per category for the selected month.</p>
-		<p>To see the amount of a single category, click no the bar.</p>
-		<p>
-			The total amount of expenses for {localMonthYear(selectedMonth)} is
-			<strong> {currency(totalAmount(monthExpenses[selectedMonth] || []), 0)}. </strong>
-		</p>
-		<Select
-			label="Month:"
-			id="month"
-			value={selectedMonth || ''}
-			placeholder="Select a month"
-			on:change={(/** @type {any} */ { target }) => monthBarchartStore.set(target.value)}
-		>
-			{#each months as month}
-				<option value={month}>{localMonthYear(month)}</option>
-			{/each}
-		</Select>
-	</div>
-	<div class="chart-container" style={`height: ${categories.length * 27}px`}>
-		<canvas bind:this={chartCanvas} id="bar-chart" />
-	</div>
+<div>
+	The following chart shows the amount of expenses per category for the selected month.
+	<p>To see the amount of a single category, click no the bar.</p>
+	<p>
+		The total amount of expenses for {localMonthYear(selectedMonth)} is
+		<strong> {currency(totalAmount(monthExpenses[selectedMonth] || []), 0)}. </strong>
+	</p>
+	<Select
+		label="Month:"
+		id="month"
+		value={selectedMonth || ''}
+		placeholder="Select a month"
+		on:change={(/** @type {any} */ { target }) => monthBarchartStore.set(target.value)}
+	>
+		{#each months as month}
+			<option value={month}>{localMonthYear(month)}</option>
+		{/each}
+	</Select>
 </div>
-
-<style>
-	.bar-chart-description {
-		opacity: 0.81;
-	}
-</style>
+<div style={`height: ${categories.length * 27}px`}>
+	<canvas bind:this={chartCanvas} id="bar-chart" />
+</div>

@@ -119,12 +119,10 @@
 	}
 </script>
 
-<div class="bar-chart">
-	<div class="bar-chart-description">
-		<p>
-			This chart shows the expenses per month for the selected categories over the last
-			{monthsToDisplay} months.
-		</p>
+<div>
+	<div>
+		This chart shows the expenses per month for the selected categories over the last
+		{monthsToDisplay} months.
 		<p>The chart is interactive. You can click on the chart to see the exact amount for a month.</p>
 	</div>
 
@@ -159,10 +157,6 @@
 </div>
 
 <style>
-	.bar-chart-description {
-		opacity: 0.81;
-	}
-
 	.chart-container {
 		height: 300px;
 		width: 100%;

@@ -1,8 +1,5 @@
 import { writable } from 'svelte/store';
 
-/** @typedef {import('$lib/types').Expense} Expense */
-/** @typedef {import('$lib/types').Category} Category */
-
 /** @type { Expense[] } */
 const expenses = [];
 export const expensesStore = writable(expenses);
@@ -21,23 +18,23 @@ export const monthBarchartStore = writable('');
 const openListItems = [];
 
 function createOpenListItemsStore() {
-  const { subscribe, set, update } = writable(openListItems);
+	const { subscribe, set, update } = writable(openListItems);
 
-  /** @param {string} label */
-  const toggle = (label) =>
-    update((value) => {
-      if (value.includes(label)) {
-        return value.filter((i) => i !== label);
-      } else {
-        return [...value, label];
-      }
-    });
+	/** @param {string} label */
+	const toggle = (label) =>
+		update((value) => {
+			if (value.includes(label)) {
+				return value.filter((i) => i !== label);
+			} else {
+				return [...value, label];
+			}
+		});
 
-  return {
-    subscribe,
-    toggle,
-    set
-  };
+	return {
+		subscribe,
+		toggle,
+		set
+	};
 }
 
 export const openListItemsStore = createOpenListItemsStore();

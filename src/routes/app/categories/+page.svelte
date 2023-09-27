@@ -11,12 +11,6 @@
 	import { expensesStore, categoriesStore } from '$lib/stores';
 	import { categoryColors } from '$lib/settings';
 
-	/**
-	 * @typedef {import('$lib/types').Category} Category
-	 * @typedef {import('$lib/types').CategoryMonthlyAmounts} CategoryMonthlyAmounts
-	 * @typedef {import('$lib/components/types').DialogAction} DialogAction
-	 */
-
 	/** @type {Category | undefined}*/
 	let editCategory = undefined;
 

@@ -13,11 +13,6 @@
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
 	import { getMonthExpenses, sortExpenses, sum } from '$lib/utilities/list';
 
-	/**
-	 * @typedef {import('$lib/types').Expense} Expense
-	 * @typedef {import('$lib/components/types').DialogAction} DialogAction
-	 */
-
 	/** @type {Expense | undefined}*/
 	let editExpense = undefined;
 
@@ -102,13 +97,13 @@
 
 <List>
 	{#each Object.entries(monthExpenses) as [month, expenses]}
-		<ListItem sticky border on:click={() => openListItemsStore.toggle(month)}>
+		<ListItem sticky border on:click={() => openListItemsStore.toggle(month)} hover>
 			<span>{localMonthYear(month)}</span>
 			<span slot="end">{currency(sum(expenses))}</span>
 		</ListItem>
 		{#if $openListItemsStore.includes(month)}
 			{#each getExpenseItems(expenses) as { expense, category }}
-				<ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))}>
+				<ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))} hover>
 					{`${localDate(expense.date)} ${expense.issue}`}
 					<span slot="sub" style:color={category?.color}>{category?.name}</span>
 					<span slot="end">{currency(expense.amount)}</span>
