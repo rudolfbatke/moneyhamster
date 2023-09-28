@@ -10,6 +10,7 @@
 	import { sortCategories } from '$lib/utilities/list';
 	import { expensesStore, categoriesStore } from '$lib/stores';
 	import { categoryColors } from '$lib/settings';
+	import { openAppDB } from '$lib/db';
 
 	/** @type {Category | undefined}*/
 	let editCategory = undefined;
@@ -79,13 +80,16 @@
 	}
 
 	/** @param {DialogAction} action */
-	function onDialogButtonClick(action) {
+	async function onDialogButtonClick(action) {
 		if (editCategory === undefined) return;
 
 		let updatedCategories = [...categories];
 
+		const db = await openAppDB();
+
 		if (action === 'delete') {
 			updatedCategories = categories.filter((c) => c.id !== editCategory?.id);
+			db.delete('categories', editCategory.id);
 		}
 
 		if (action === 'save') {
@@ -100,8 +104,10 @@
 			const index = updatedCategories.findIndex((e) => e.id === editCategory?.id);
 			if (index === -1) {
 				updatedCategories = sortCategories([...updatedCategories, editCategory]);
+				db.add('categories', editCategory);
 			} else {
 				updatedCategories[index] = editCategory;
+				db.put('categories', editCategory);
 			}
 		}
 		editCategory = undefined;

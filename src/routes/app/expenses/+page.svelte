@@ -8,6 +8,7 @@
 	import ListItem from '$lib/components/ListItem.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
+	import { openAppDB } from '$lib/db';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
 	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
@@ -41,7 +42,7 @@
 	}
 
 	/** @param {DialogAction} action */
-	function onDialogButtonClick(action) {
+	async function onDialogButtonClick(action) {
 		if (editExpense === undefined) return;
 
 		if (action === 'duplicate') {
@@ -54,8 +55,11 @@
 			return;
 		}
 
+		const db = await openAppDB();
+
 		if (action === 'delete') {
 			expensesStore.update((value) => value.filter((e) => e.id !== editExpense?.id));
+			db.delete('expenses', editExpense.id);
 		}
 
 		if (action === 'save') {
@@ -73,8 +77,10 @@
 			let expensesUpdate = [...expenses];
 			if (index === -1) {
 				expensesUpdate = sortExpenses([...expenses, editExpense]);
+				db.add('expenses', editExpense);
 			} else {
 				expensesUpdate[index] = editExpense;
+				db.put('expenses', editExpense);
 			}
 			expensesStore.set(expensesUpdate);
 		}

@@ -1,3 +1,4 @@
+import { openAppDB } from '$lib/db';
 import {
   expensesStore,
   categoriesStore,
@@ -16,18 +17,14 @@ const get = (key) => window.localStorage.getItem(key);
  */
 const set = (key, value) => window.localStorage.setItem(key, value);
 
-export function setAndSupscribeStores() {
-  const expenses = JSON.parse(get('expenses') || '[]');
-  expensesStore.set(sortExpenses(expenses));
-  expensesStore.subscribe((expenses) => {
-    set('expenses', JSON.stringify(expenses));
-  });
+export async function setAndSupscribeStores() {
+  const db = await openAppDB();
 
-  const categories = JSON.parse(get('categories') || '[]');
+  const expenses = await db.getAll('expenses');
+  expensesStore.set(sortExpenses(expenses));
+
+  const categories = await db.getAll('categories');
   categoriesStore.set(sortCategories(categories));
-  categoriesStore.subscribe((categories) => {
-    set('categories', JSON.stringify(categories));
-  });
 
   const openListItems = JSON.parse(get('openListItems') || '[]');
   openListItemsStore.set(openListItems);

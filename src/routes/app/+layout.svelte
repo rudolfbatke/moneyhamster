@@ -1,7 +1,7 @@
 <script>
 	import { browser } from '$app/environment';
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { setAndSupscribeStores } from './localStorageStores';
+	import { setAndSupscribeStores } from '$lib/utilities/localStorageStores';
 
 	if (browser) {
 		setAndSupscribeStores();
