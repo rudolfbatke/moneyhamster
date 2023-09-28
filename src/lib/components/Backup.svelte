@@ -1,6 +1,7 @@
 <script>
 	import Alert from '$lib/components/Alert.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import { openAppDB } from '$lib/db';
 	import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
 	import { kebapDate } from '$lib/utilities/formatter';
 
@@ -9,11 +10,15 @@
 
 	let restoreAlertIsOpen = false;
 
-	function backup() {
+	async function backup() {
+		const db = await openAppDB();
+
+		/** @type {BackupData} */
 		const data = {
-			expenses: $expensesStore,
-			categories: $categoriesStore,
-			openListItems: $openListItemsStore
+			expenses: await db.getAll('expenses'),
+			categories: await db.getAll('categories'),
+			openListItems: $openListItemsStore,
+			version: '1'
 		};
 
 		const blob = new Blob([JSON.stringify(data)], {
@@ -23,7 +28,7 @@
 		// save file to downloads folder
 		const a = document.createElement('a');
 		a.href = URL.createObjectURL(blob);
-		a.download = `hamster-cash-backup-${kebapDate(new Date())}.json`;
+		a.download = `hamster.cash-${kebapDate(new Date())}.json`;
 		a.click();
 		a.remove();
 	}
@@ -33,13 +38,21 @@
 		if (files) {
 			const reader = new FileReader();
 			reader.readAsText(files[0], 'UTF-8');
-			reader.onload = (event) => {
+			reader.onload = async (event) => {
+				/** @type {BackupData} */
 				const { expenses, categories, openListItems } = JSON.parse(
 					event.target?.result?.toString() || '{}'
 				);
 				expensesStore.set(expenses);
 				categoriesStore.set(categories);
 				openListItemsStore.set(openListItems);
+
+				const db = await openAppDB();
+				await Promise.all([db.clear('expenses'), db.clear('categories')]);
+				await Promise.all([
+					...expenses.map((expense) => db.put('expenses', expense)),
+					...categories.map((category) => db.put('categories', category))
+				]);
 			};
 			restoreAlertIsOpen = false;
 		}
