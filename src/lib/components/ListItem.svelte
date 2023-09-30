@@ -8,7 +8,18 @@
 	export let hover = false;
 </script>
 
-<li class:hover class:highlighted class:border class:sticky class:lucent on:click on:keypress>
+<dev
+	class="list-item"
+	class:hover
+	class:highlighted
+	class:border
+	class:sticky
+	class:lucent
+	on:click
+	on:keypress
+	role="menuitem"
+	tabindex="0"
+>
 	<span>
 		<slot />
 		<div>
@@ -16,10 +27,10 @@
 		</div>
 	</span>
 	<slot name="end" />
-</li>
+</dev>
 
 <style>
-	li {
+	.list-item {
 		display: flex;
 		justify-content: space-between;
 		padding: 0 1rem;

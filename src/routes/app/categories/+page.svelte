@@ -164,9 +164,11 @@
 		<div class="content row">
 			<div
 				on:click={() => (editCategory = category)}
-				on:keypress={() => {}}
+				on:keypress={() => (editCategory = category)}
 				class="cell category"
 				style={`color: ${category.color}`}
+				role="menuitem"
+				tabindex="0"
 			>
 				{category.name}
 			</div>
@@ -228,6 +230,8 @@
 						style={`background: ${color}`}
 						on:click={() => setColor(color)}
 						on:keypress={() => setColor(color)}
+						role="menuitem"
+						tabindex="0"
 					/>
 				{/each}
 			</div>

@@ -6,7 +6,7 @@
 	export let remove = false;
 </script>
 
-<div class="chip" style="background-color: {color}" on:click on:keypress>
+<div class="chip" style="background-color: {color}" on:click on:keypress role="button" tabindex="0">
 	<div class="label">{label}</div>
 	{#if remove}
 		<div class="icon">
