@@ -82,10 +82,33 @@ declare global {
 			key: number;
 			indexes: { date: Date };
 		};
+
 		categories: {
 			value: Category;
 			key: number;
 		};
+
+		webrtc: {
+			value: Webrtc;
+			key: string;
+		};
+	}
+
+	type Webrtc = {
+		id: 'guest' | 'host';
+		description: string;
+	};
+
+	interface CreatePeerConnectionProps {
+		remoteDescription?: string;
+		onChannelOpen: () => void;
+		onMessageReceived: (message: string) => void;
+	}
+
+	interface CreatePeerConnectionResponse {
+		localDescription: string;
+		setAnswerDescription: (answerDescription: string) => void;
+		sendMessage: (message: string) => void;
 	}
 }
 
