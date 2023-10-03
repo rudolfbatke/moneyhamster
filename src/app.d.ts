@@ -87,17 +87,7 @@ declare global {
 			value: Category;
 			key: number;
 		};
-
-		webrtc: {
-			value: Webrtc;
-			key: string;
-		};
 	}
-
-	type Webrtc = {
-		id: 'guest' | 'host';
-		description: string;
-	};
 
 	interface CreatePeerConnectionProps {
 		remoteDescription?: string;

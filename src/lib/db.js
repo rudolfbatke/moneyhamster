@@ -13,9 +13,5 @@ export const openAppDB = () =>
 				keyPath: 'id',
 				autoIncrement: true
 			});
-
-			db.createObjectStore('webrtc', {
-				keyPath: 'id'
-			});
 		}
 	});
