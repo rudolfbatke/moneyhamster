@@ -42,3 +42,23 @@ h2 {
 	font-size: 1.2rem;
 	font-weight: unset;
 }
+
+*::-webkit-scrollbar {
+	width: 6px; /* width of the entire scrollbar */
+	height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--background-highlight); /* color of the tracking area */
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--text-light); /* color of the scroll thumb */
+	border-radius: 18px; /* roundness of the scroll thumb */
+}
+
+/* Works on Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--background-highlight);
+}
