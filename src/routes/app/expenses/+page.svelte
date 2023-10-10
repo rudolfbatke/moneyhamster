@@ -6,38 +6,46 @@
 
 	import List from '$lib/components/List.svelte';
 	import ListItem from '$lib/components/ListItem.svelte';
+	import NoItems from '$lib/components/NoItems.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import { openAppDB } from '$lib/db';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
 	import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
-	import { currency, localDate, localMonthYear, today } from '$lib/utilities/formatter';
-	import { getMonthExpenses, sortExpenses, sum } from '$lib/utilities/list';
+	import { currency, localDate, localMonthYear, now, today } from '$lib/utilities/formatter';
+	import {
+		getIndexById,
+		getMonthExpenses,
+		getNextId,
+		sortExpenses,
+		sum,
+		undeletedItems
+	} from '$lib/utilities/list';
+	import { syncData } from '$lib/utilities/sync';
 
 	/** @type {Expense | undefined}*/
 	let editExpense = undefined;
 
-	/** @type {boolean | undefined}*/
-	let expenseIsNew = undefined;
+	let expenseIsNew = false;
 
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
 
-	$: expenses = $expensesStore;
+	$: expenses = undeletedItems($expensesStore);
 
-	$: categories = $categoriesStore;
+	$: categories = undeletedItems($categoriesStore);
 
-	// group expenses by month
 	$: monthExpenses = getMonthExpenses(expenses);
 
-	function setNewExpense() {
+	function initNewExpense() {
 		expenseIsNew = true;
 		editExpense = {
-			id: (expenses.at(-1)?.id || 0) + 1,
+			id: getNextId(expenses),
 			date: today(),
 			issue: '',
 			amount: 0,
-			category: 0
+			category: 0,
+			updatedAt: now()
 		};
 	}
 
@@ -45,21 +53,24 @@
 	async function onDialogButtonClick(action) {
 		if (editExpense === undefined) return;
 
+		if (action === 'close') {
+			editExpense = undefined;
+			expenseIsNew = false;
+			return;
+		}
+
 		if (action === 'duplicate') {
 			editExpense = {
 				...editExpense,
-				id: (expenses.at(-1)?.id || 0) + 1,
+				id: getNextId(expenses),
 				date: today()
 			};
 			expenseIsNew = true;
 			return;
 		}
 
-		const db = await openAppDB();
-
 		if (action === 'delete') {
-			expensesStore.update((value) => value.filter((e) => e.id !== editExpense?.id));
-			db.delete('expenses', editExpense.id);
+			editExpense.updatedAt = editExpense.deletedAt = now();
 		}
 
 		if (action === 'save') {
@@ -69,27 +80,33 @@
 				date: form.date.value,
 				issue: form.issue.value,
 				amount: Number(form.amount.value),
-				category: Number(form.category.value)
+				category: Number(form.category.value),
+				updatedAt: new Date().toISOString()
 			};
-
-			// if new expense, add to list of expenses, else update
-			const index = expenses.findIndex((e) => e.id === editExpense?.id);
-			let expensesUpdate = [...expenses];
-			if (index === -1) {
-				expensesUpdate = sortExpenses([...expenses, editExpense]);
-				db.add('expenses', editExpense);
-			} else {
-				expensesUpdate[index] = editExpense;
-				db.put('expenses', editExpense);
-			}
-			expensesStore.set(expensesUpdate);
 		}
 
+		// if new expense, add to list of expenses, else update
+		const index = getIndexById(expenses, editExpense.id);
+		let updatedExpenses = [...expenses];
+		if (index === -1) {
+			updatedExpenses = sortExpenses([...expenses, editExpense]);
+		} else {
+			updatedExpenses[index] = editExpense;
+		}
+
+		expensesStore.set(updatedExpenses);
+
+		const db = await openAppDB();
+		await db.put('expenses', editExpense);
+
+		syncData({ expenses: updatedExpenses, categories });
+
 		editExpense = undefined;
+		expenseIsNew = false;
 	}
 
 	/** @param {Expense[]} expenses */
-	function getExpenseItems(expenses) {
+	function expensesWithCategories(expenses) {
 		const sortedExpenses = sortExpenses(expenses);
 		const expenseItems = sortedExpenses.map((e) => {
 			const category = categories.find((c) => c.id === e.category);
@@ -101,6 +118,10 @@
 
 <Topbar>Expenses</Topbar>
 
+{#if expenses.length === 0}
+	<NoItems />
+{/if}
+
 <List>
 	{#each Object.entries(monthExpenses) as [month, expenses]}
 		<ListItem sticky border on:click={() => openListItemsStore.toggle(month)} hover>
@@ -108,10 +129,10 @@
 			<span slot="end">{currency(sum(expenses))}</span>
 		</ListItem>
 		{#if $openListItemsStore.includes(month)}
-			{#each getExpenseItems(expenses) as { expense, category }}
+			{#each expensesWithCategories(expenses) as { expense, category }}
 				<ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))} hover>
 					{`${localDate(expense.date)} ${expense.issue}`}
-					<span slot="sub" style:color={category?.color}>{category?.name}</span>
+					<span slot="sub" style:color={category?.color}>{category?.name || 'No Category'}</span>
 					<span slot="end">{currency(expense.amount)}</span>
 				</ListItem>
 			{/each}
@@ -119,43 +140,41 @@
 	{/each}
 </List>
 
-{#if editExpense !== undefined}
-	<Dialog onButtonClick={onDialogButtonClick} duplicateButton>
-		<span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
-		<form bind:this={form}>
-			<Input label="Date:" id="date" type="date" required value={editExpense.date || today()} />
-			<Input
-				label="Issue:"
-				id="issue"
-				type="text"
-				required
-				placeholder="e.g. Lunch"
-				value={editExpense.issue}
-			/>
-			<Input
-				label="Cost amount:"
-				id="amount"
-				type="number"
-				required
-				placeholder="e.g. 12.34"
-				value={editExpense.amount || ''}
-			/>
-			<Select
-				label="Category:"
-				id="category"
-				value={editExpense.category || ''}
-				placeholder="select a category"
-			>
-				{#each categories as category}
-					<option value={category.id}>{category.name}</option>
-				{/each}
-			</Select>
-		</form>
-	</Dialog>
-{/if}
+<Dialog onButtonClick={onDialogButtonClick} duplicateButton open={!!editExpense}>
+	<span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
+	<form bind:this={form}>
+		<Input label="Date:" id="date" type="date" required value={editExpense?.date || today()} />
+		<Input
+			label="Issue:"
+			id="issue"
+			type="text"
+			required
+			placeholder="e.g. Lunch"
+			value={editExpense?.issue}
+		/>
+		<Input
+			label="Cost amount:"
+			id="amount"
+			type="number"
+			required
+			placeholder="e.g. 12.34"
+			value={editExpense?.amount || ''}
+		/>
+		<Select
+			label="Category:"
+			id="category"
+			value={editExpense?.category || ''}
+			placeholder="select a category"
+		>
+			{#each categories as category}
+				<option value={category.id}>{category.name}</option>
+			{/each}
+		</Select>
+	</form>
+</Dialog>
 
 <Float>
-	<Button variant="fill" color="primary" on:click={() => setNewExpense()}>
+	<Button variant="fill" color="primary" on:click={() => initNewExpense()}>
 		<AddIcon />
 	</Button>
 </Float>

@@ -2,11 +2,15 @@
 	/** @type {'primary' | 'danger' | undefined} */
 	export let color = undefined;
 
-	/** @type {'fill' | 'outline' | undefined} */
-	export let variant = undefined;
+	/** @type {'fill' | 'outline' | 'plain' } */
+	export let variant = 'plain';
 
-	/** @type {string |undefined} */
-	export let value = undefined;
+	/** @type {string} */
+	export let value = '';
+
+	export let disabled = false;
+
+	export let focusBorder = true;
 </script>
 
 <button
@@ -14,8 +18,10 @@
 	class:primary={color === 'primary'}
 	class:fill={variant === 'fill'}
 	class:outline={variant === 'outline'}
+	class:focusBorder
 	on:click
 	{value}
+	{disabled}
 >
 	<slot />
 </button>
@@ -34,6 +40,7 @@
 		background-color: var(--button-background-color, var(--background-color));
 		color: var(--button-text-color, var(--text-color));
 		min-height: 2.5rem;
+		height: fit-content;
 	}
 
 	button:hover {
@@ -42,7 +49,15 @@
 
 	button:focus {
 		outline: none;
-		border: 1px solid var(--focus-color);
+	}
+
+	button:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	button:disabled:hover {
+		background-color: var(--button-background-color, var(--background-color));
 	}
 
 	.fill {

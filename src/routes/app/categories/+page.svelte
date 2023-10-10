@@ -6,27 +6,28 @@
 
 	import Topbar from '$lib/components/Topbar.svelte';
 	import AddIcon from '$lib/icons/AddIcon.svelte';
-	import { currency, getYearMonth, monthSlashYear } from '$lib/utilities/formatter';
-	import { sortCategories } from '$lib/utilities/list';
+	import { currency, getYearMonth, monthSlashYear, now } from '$lib/utilities/formatter';
+	import { getNextId, sortCategories, undeletedItems } from '$lib/utilities/list';
 	import { expensesStore, categoriesStore } from '$lib/stores';
 	import { categoryColors } from '$lib/settings';
 	import { openAppDB } from '$lib/db';
+	import { syncData } from '$lib/utilities/sync';
+	import NoItems from '$lib/components/NoItems.svelte';
 
 	/** @type {Category | undefined}*/
 	let editCategory = undefined;
 
-	/** @type {boolean | undefined}*/
-	let categoryIsNew = undefined;
+	/** @type {boolean}*/
+	let categoryIsNew = false;
 
 	/** @type {HTMLFormElement | undefined}*/
 	let form = undefined;
 
-	/** open color select dialog */
-	let selectColor = false;
+	let colorDialogIsOpen = false;
 
-	$: expenses = $expensesStore;
+	$: expenses = undeletedItems($expensesStore);
 
-	$: categories = $categoriesStore;
+	$: categories = undeletedItems($categoriesStore);
 
 	$: categoryMonthlyAmounts = expenses.reduce((/**@type CategoryMonthlyAmounts*/ acc, e) => {
 		const { date: expenseDate, amount: expenseAmount, category: categoryId } = e;
@@ -73,9 +74,10 @@
 	function setNewCategory() {
 		categoryIsNew = true;
 		editCategory = {
-			id: (categories.at(-1)?.id || 0) + 1,
+			id: getNextId(categories),
 			name: '',
-			color: 'Gray'
+			color: 'Gray',
+			updatedAt: now()
 		};
 	}
 
@@ -83,35 +85,43 @@
 	async function onDialogButtonClick(action) {
 		if (editCategory === undefined) return;
 
-		let updatedCategories = [...categories];
-
-		const db = await openAppDB();
+		if (action === 'close') {
+			editCategory = undefined;
+			categoryIsNew = false;
+			return;
+		}
 
 		if (action === 'delete') {
-			updatedCategories = categories.filter((c) => c.id !== editCategory?.id);
-			db.delete('categories', editCategory.id);
+			editCategory.deletedAt = editCategory.deletedAt = now();
 		}
 
 		if (action === 'save') {
 			if (!form?.reportValidity()) return;
+
 			editCategory = {
 				...editCategory,
 				name: form.issue.value
-				// color: form.color.value
 			};
-
-			// if new category, add to list of categories and sort
-			const index = updatedCategories.findIndex((e) => e.id === editCategory?.id);
-			if (index === -1) {
-				updatedCategories = sortCategories([...updatedCategories, editCategory]);
-				db.add('categories', editCategory);
-			} else {
-				updatedCategories[index] = editCategory;
-				db.put('categories', editCategory);
-			}
 		}
-		editCategory = undefined;
+
+		let updatedCategories = [...categories];
+
+		// if new category, add to list of categories and sort
+		const index = updatedCategories.findIndex((e) => e.id === editCategory?.id);
+		if (index === -1) {
+			updatedCategories = sortCategories([...updatedCategories, editCategory]);
+		} else {
+			updatedCategories[index] = editCategory;
+		}
+
 		categoriesStore.set(updatedCategories);
+
+		const db = await openAppDB();
+		await db.put('categories', editCategory);
+		syncData();
+
+		editCategory = undefined;
+		categoryIsNew = false;
 	}
 
 	/**
@@ -137,107 +147,119 @@
 			...editCategory,
 			color
 		};
-		selectColor = false;
+		colorDialogIsOpen = false;
 	}
 </script>
 
 <Topbar>Categories</Topbar>
 
-<div class="table">
-	<div class="header row">
-		<div class="cell category">Category</div>
-		<div class="cells">
-			{#each months as month}
-				<div class="cell">
-					{monthSlashYear(month)}
-				</div>
-			{/each}
-			{#each years as year}
-				<div class="cell">
-					{year}
-				</div>
-			{/each}
-		</div>
-	</div>
-
-	{#each categories as category}
-		<div class="content row">
-			<div
-				on:click={() => (editCategory = category)}
-				on:keypress={() => (editCategory = category)}
-				class="cell category"
-				style={`color: ${category.color}`}
-				role="menuitem"
-				tabindex="0"
-			>
-				{category.name}
-			</div>
+{#if categories.length === 0}
+	<NoItems />
+{:else}
+	<div class="table">
+		<div class="header row">
+			<div class="cell category">Category</div>
 			<div class="cells">
 				{#each months as month}
 					<div class="cell">
-						{currency(categoryMonthlyAmounts[category.id]?.[month]?.total || 0, 0)}
+						{monthSlashYear(month)}
 					</div>
 				{/each}
 				{#each years as year}
 					<div class="cell">
-						{currency(sumYearByCategory(category.id, year), 0)}
+						{year}
 					</div>
 				{/each}
 			</div>
 		</div>
-	{/each}
 
-	<div class="totals row">
-		<div class="cell category">Totals</div>
-		<div class="cells">
-			{#each monthlyTotals as total}
-				<div class="cell">
-					{currency(total, 0)}
+		{#each categories as category}
+			<div class="content row">
+				<div
+					on:click={() => (editCategory = category)}
+					on:keypress={() => (editCategory = category)}
+					class="cell category"
+					style={`color: ${category.color}`}
+					role="menuitem"
+					tabindex="0"
+				>
+					{category.name}
 				</div>
-			{/each}
-			{#each yearlyTotals as total}
-				<div class="cell">
-					{currency(total, 0)}
+				<div class="cells">
+					{#each months as month}
+						<div class="cell">
+							{currency(categoryMonthlyAmounts[category.id]?.[month]?.total || 0, 0)}
+						</div>
+					{/each}
+					{#each years as year}
+						<div class="cell">
+							{currency(sumYearByCategory(category.id, year), 0)}
+						</div>
+					{/each}
 				</div>
-			{/each}
-		</div>
-	</div>
-</div>
+			</div>
+		{/each}
 
-{#if editCategory !== undefined}
-	<Dialog onButtonClick={onDialogButtonClick}>
-		<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
-		<form bind:this={form}>
-			<Input label="Name" id="issue" required placeholder="e.g. Food" value={editCategory.name} />
-			<Input
-				label="Color"
-				id="color"
-				value={editCategory.color}
-				readonly
-				backgroundColor={editCategory.color}
-				on:click={() => (selectColor = true)}
-				cursorPointer
-			/>
-		</form>
-	</Dialog>
-	{#if selectColor}
-		<Dialog actionButtons={false} onButtonClick={() => (selectColor = false)}>
-			<span slot="title">Pick a Color</span>
-			<div class="color-select">
-				{#each categoryColors as color}
-					<div
-						class="color"
-						style={`background: ${color}`}
-						on:click={() => setColor(color)}
-						on:keypress={() => setColor(color)}
-						role="menuitem"
-						tabindex="0"
-					/>
+		<div class="totals row">
+			<div class="cell category">Totals</div>
+			<div class="cells">
+				{#each monthlyTotals as total}
+					<div class="cell">
+						{currency(total, 0)}
+					</div>
+				{/each}
+				{#each yearlyTotals as total}
+					<div class="cell">
+						{currency(total, 0)}
+					</div>
 				{/each}
 			</div>
-		</Dialog>
-	{/if}
+		</div>
+	</div>
 {/if}
+
+<Dialog onButtonClick={onDialogButtonClick} open={!!editCategory}>
+	<span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
+	<form bind:this={form}>
+		<Input
+			id="issue"
+			label="Name"
+			labelWidth="3rem"
+			placeholder="e.g. Food"
+			required
+			value={editCategory?.name}
+		/>
+		<Input
+			backgroundColor={editCategory?.color}
+			cursor="pointer"
+			id="color"
+			label="Color"
+			labelWidth="3rem"
+			on:click={() => (colorDialogIsOpen = true)}
+			readonly
+			value={editCategory?.color}
+		/>
+	</form>
+</Dialog>
+<Dialog
+	actionButtons={false}
+	onButtonClick={() => (colorDialogIsOpen = false)}
+	open={colorDialogIsOpen}
+>
+	<span slot="title">Pick a Color</span>
+	<div class="color-select">
+		{#each categoryColors as color}
+			<div
+				class="color"
+				style={`background: ${color}`}
+				on:click={() => setColor(color)}
+				on:keypress={() => setColor(color)}
+				role="menuitem"
+				tabindex="0"
+			/>
+		{/each}
+	</div>
+</Dialog>
 
 <Float>
 	<Button variant="fill" color="primary" on:click={() => setNewCategory()}>

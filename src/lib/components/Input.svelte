@@ -1,5 +1,5 @@
 <script>
-	/** @type {'text' | 'number' | 'date'} */
+	/** @type {'text' | 'number' | 'date' | 'password'} */
 	export let type = 'text';
 	export let label = '';
 	/** @type {string | number} */
@@ -9,19 +9,34 @@
 	export let disabled = false;
 	export let readonly = false;
 	export let id = '';
-	/** @type {string|undefined} */
-	export let backgroundColor = undefined;
-	export let cursorPointer = false;
+	export let inputWidth = '123px';
+	export let labelWidth = 'unset';
+	export let backgroundColor = 'unset';
+	export let cursor = 'unset';
+	/** @type {(value: string) => void} */
+	export let onInput = () => {};
 
-	$: style = `
-      cursor: ${cursorPointer ? 'pointer' : 'unset'};
-      background-color: ${backgroundColor ? backgroundColor : 'var(--background-color)'};
-      color: ${backgroundColor ? 'black' : 'unset'};
+	$: labelStyle = `
+      width: ${labelWidth};
   `;
+
+	$: inputStyle = `
+      cursor: ${cursor};
+      background-color: ${backgroundColor ? backgroundColor : 'var(--background-color)'};
+      width: ${inputWidth};
+  `;
+
+	/** @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}*/
+	function oninput(e) {
+		const target = e.currentTarget;
+		if (target instanceof HTMLInputElement) {
+			onInput(target.value);
+		}
+	}
 </script>
 
 <div>
-	<label for={id}>
+	<label for={id} style={labelStyle}>
 		{label}
 	</label>
 	<input
@@ -32,9 +47,11 @@
 		{disabled}
 		{readonly}
 		{id}
+		name={id}
 		step="any"
-		{style}
+		style={inputStyle}
 		on:click
+		on:input={oninput}
 	/>
 </div>
 

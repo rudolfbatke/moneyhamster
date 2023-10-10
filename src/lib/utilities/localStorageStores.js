@@ -4,7 +4,8 @@ import {
   categoriesStore,
   openListItemsStore,
   monthBarchartStore,
-  lineChartCategoriesStore
+  lineChartCategoriesStore,
+  lastSyncDateStore
 } from '$lib/stores';
 import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
@@ -28,19 +29,25 @@ export async function setAndSupscribeStores() {
 
   const openListItems = JSON.parse(get('openListItems') || '[]');
   openListItemsStore.set(openListItems);
-  openListItemsStore.subscribe((openListItems) => {
-    set('openListItems', JSON.stringify(openListItems));
+  openListItemsStore.subscribe((value) => {
+    set('openListItems', JSON.stringify(value));
   });
 
   const monthBarchart = JSON.parse(get('monthBarchart') || '""');
   monthBarchartStore.set(monthBarchart);
-  monthBarchartStore.subscribe((monthBarchart) => {
-    set('monthBarchart', JSON.stringify(monthBarchart));
+  monthBarchartStore.subscribe((value) => {
+    set('monthBarchart', JSON.stringify(value));
   });
 
   const lineChartCategories = JSON.parse(get('lineChartCategories') || '[]');
   lineChartCategoriesStore.set(lineChartCategories);
-  lineChartCategoriesStore.subscribe((lineChartCategories) => {
-    set('lineChartCategories', JSON.stringify(lineChartCategories));
+  lineChartCategoriesStore.subscribe((value) => {
+    set('lineChartCategories', JSON.stringify(value));
+  });
+
+  const lastSyncDate = get('sd') || '';
+  lastSyncDateStore.set(lastSyncDate);
+  lastSyncDateStore.subscribe((value) => {
+    set('sd', value);
   });
 }

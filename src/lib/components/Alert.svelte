@@ -2,8 +2,12 @@
 	import Button from './Button.svelte';
 
 	export let open = false;
-	export let onConfirm = () => {};
-	export let onCancel = () => {};
+
+	/** @type {(() => void)|undefined} */
+	export let onConfirm = undefined;
+
+	/** @type {(() => void)|undefined} */
+	export let onCancel = undefined;
 </script>
 
 {#if open}
@@ -12,8 +16,12 @@
 			<div class="content">
 				<slot />
 				<div class="actions">
-					<Button color="primary" variant="fill" on:click={onCancel}>No</Button>
-					<Button on:click={onConfirm} color="danger">Yes</Button>
+					{#if onConfirm}
+						<Button variant="outline" on:click={onConfirm} color="danger">Okay</Button>
+					{/if}
+					{#if onCancel}
+						<Button color="primary" variant="outline" on:click={onCancel}>Cancel</Button>
+					{/if}
 				</div>
 			</div>
 		</dialog>
@@ -49,6 +57,5 @@
 		display: flex;
 		justify-content: space-between;
 		margin-top: 20px;
-		text-align: right;
 	}
 </style>

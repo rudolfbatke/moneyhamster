@@ -46,6 +46,8 @@ declare global {
 
 	interface Entity {
 		id: number;
+		updatedAt: string;
+		deletedAt?: string;
 	}
 
 	interface Migration extends Changelog {
@@ -87,18 +89,6 @@ declare global {
 			value: Category;
 			key: number;
 		};
-	}
-
-	interface CreatePeerConnectionProps {
-		remoteDescription?: string;
-		onChannelOpen: () => void;
-		onMessageReceived: (message: string) => void;
-	}
-
-	interface CreatePeerConnectionResponse {
-		localDescription: string;
-		setAnswerDescription: (answerDescription: string) => void;
-		sendMessage: (message: string) => void;
 	}
 }
 

@@ -14,41 +14,45 @@
 
 	export let duplicateButton = false;
 	export let actionButtons = true;
+	export let open = false;
 </script>
 
-<div class="overlay">
-	<dialog open>
-		<div class="title">
-			<h2>
-				<slot name="title">Title</slot>
-			</h2>
-			<Button on:click={() => onButtonClick('close')}>
-				<CloseIcon />
-			</Button>
-		</div>
-		<div class="content">
-			<slot />
-		</div>
-		{#if actionButtons}
-			<div class="actions">
-				<Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button>
-				<div>
-					<Button on:click={() => onButtonClick('delete')} color="danger">
-						<DeleteIcon />
-					</Button>
-					{#if duplicateButton}
-						<Button on:click={() => onButtonClick('duplicate')}>
-							<CopyIcon />
-						</Button>
-					{/if}
-				</div>
+<dialog {open}>
+	<div class="overlay">
+		<div class="dialog">
+			<div class="title">
+				<h2>
+					<slot name="title">Dialog</slot>
+				</h2>
+				<Button on:click={() => onButtonClick('close')}>
+					<CloseIcon />
+				</Button>
 			</div>
-		{/if}
-	</dialog>
-</div>
+			<div class="content">
+				<slot />
+			</div>
+			{#if actionButtons}
+				<div class="actions">
+					<Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button
+					>
+					<div>
+						<Button on:click={() => onButtonClick('delete')} color="danger">
+							<DeleteIcon />
+						</Button>
+						{#if duplicateButton}
+							<Button on:click={() => onButtonClick('duplicate')}>
+								<CopyIcon />
+							</Button>
+						{/if}
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+</dialog>
 
 <style>
-	.overlay {
+	dialog {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -58,7 +62,7 @@
 		z-index: 100;
 	}
 
-	dialog {
+	.dialog {
 		position: fixed;
 		top: 50%;
 		left: 50%;
@@ -69,6 +73,7 @@
 		z-index: 1000;
 		border: 1px solid var(--border-color);
 		width: 500px;
+		padding: 1rem;
 	}
 
 	.title {
