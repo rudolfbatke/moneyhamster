@@ -7,17 +7,17 @@ import { readFile, writeFile } from 'node:fs/promises';
  * @type {import('./$types').RequestHandler}
  */
 export async function PUT({ request }) {
-	const { id, data, date } = await request.json();
+  const { id, data, date } = await request.json();
 
-	if (!env.SYNC_IDS.includes(id)) {
-		return new Response(null, { status: 403 });
-	}
+  if (!env.SYNC_IDS?.includes(id)) {
+    return new Response(null, { status: 403 });
+  }
 
-	const fileContent = JSON.stringify({ id, data, date });
+  const fileContent = JSON.stringify({ id, data, date });
 
-	writeFile(`tmp/${id}.json`, fileContent, { flag: 'w+' });
+  writeFile(`tmp/${id}.json`, fileContent, { flag: 'w+' });
 
-	return new Response();
+  return new Response();
 }
 
 /**
@@ -26,17 +26,20 @@ export async function PUT({ request }) {
  * @type {import('./$types').RequestHandler}
  */
 export async function GET({ url }) {
-	const id = url.searchParams.get('id');
+  const id = url.searchParams.get('id');
 
-	if (!id || !env.SYNC_IDS.includes(id)) {
-		return new Response(null, { status: 403 });
-	}
+  if (!id || !env.SYNC_IDS?.includes(id)) {
+    return new Response(null, { status: 403 });
+  }
 
-	const fileContent = await readFile(`tmp/${id}.json`);
-
-	return new Response(fileContent, {
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+  try {
+    const fileContent = await readFile(`tmp/${id}.json`);
+    return new Response(fileContent, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch {
+    return new Response(null, { status: 404 });
+  }
 }
