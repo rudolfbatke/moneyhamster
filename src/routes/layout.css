@@ -1,64 +1,45 @@
 :root {
-	--background-color: #ffffff;
-	--background-hover: #f5f5f5;
-	--background-highlight: #f8f9fa;
-	--text-color: #000000;
-	--text-light: #6c757d;
-	--text-hover: #2f2f2f;
-	--border-color: #e9e9e9;
+  --background-color: #ffffff;
+  --background-hover: #f5f5f5;
+  --background-highlight: #f8f9fa;
+  --text-color: #000000;
+  --text-light: #6c757d;
+  --text-hover: #2f2f2f;
+  --border-color: #e9e9e9;
 
-	--primary-color: #007bff;
-	--primary-hover: #0069d9;
-	--danger-color: #dc3545;
-	--danger-hover: #bd2130;
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --danger-color: #dc3545;
+  --danger-hover: #bd2130;
 
-	--focus-color: #80bdff;
+  --focus-color: #80bdff;
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		--background-color: #1f1f1f;
-		--background-hover: #2f2f2f;
-		--background-highlight: #2f2f2f;
-		--text-color: #ffffff;
-		--text-light: #6c757d;
-		--text-hover: #f5f5f5;
-		--border-color: #2f2f2f;
-	}
+  :root {
+    --background-color: #1f1f1f;
+    --background-hover: #2f2f2f;
+    --background-highlight: #2f2f2f;
+    --text-color: #ffffff;
+    --text-light: #6c757d;
+    --text-hover: #f5f5f5;
+    --border-color: #2f2f2f;
+    color-scheme: dark;
+  }
 }
 
 body {
-	background-color: var(--background-color);
-	color: var(--text-color);
-	font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1 {
-	font-size: 1.4rem;
-	font-weight: unset;
+  font-size: 1.4rem;
+  font-weight: unset;
 }
 
 h2 {
-	font-size: 1.2rem;
-	font-weight: unset;
-}
-
-*::-webkit-scrollbar {
-	width: 6px; /* width of the entire scrollbar */
-	height: 6px;
-}
-
-*::-webkit-scrollbar-track {
-	background: var(--background-highlight); /* color of the tracking area */
-}
-
-*::-webkit-scrollbar-thumb {
-	background-color: var(--text-light); /* color of the scroll thumb */
-	border-radius: 18px; /* roundness of the scroll thumb */
-}
-
-/* Works on Firefox */
-* {
-	scrollbar-width: thin;
-	scrollbar-color: var(--background-highlight);
+  font-size: 1.2rem;
+  font-weight: unset;
 }
