@@ -5,8 +5,6 @@
   import { onMount } from 'svelte';
   import { pwaInfo } from 'virtual:pwa-info';
 
-  export const prerendered = true;
-
   if (browser) {
     setAndSupscribeStores();
   }
