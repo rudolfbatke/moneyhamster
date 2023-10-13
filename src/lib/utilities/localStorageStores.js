@@ -9,8 +9,14 @@ import {
 } from '$lib/stores';
 import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
-/** @param {string} key   */
-const get = (key) => window.localStorage.getItem(key);
+/**
+ * @param {string} key
+ * @param {boolean} parse
+ */
+const get = (key, parse = true) => {
+  const value = window.localStorage.getItem(key);
+  return value === 'undefined' ? undefined : parse ? JSON.parse(value || 'null') : value;
+};
 
 /**
  *@param {string} key
@@ -27,25 +33,25 @@ export async function setAndSupscribeStores() {
   const categories = await db.getAll('categories');
   categoriesStore.set(sortCategories(categories));
 
-  const openListItems = JSON.parse(get('openListItems') || '[]');
+  const openListItems = get('openListItems') || [];
   openListItemsStore.set(openListItems);
   openListItemsStore.subscribe((value) => {
     set('openListItems', JSON.stringify(value));
   });
 
-  const monthBarchart = JSON.parse(get('monthBarchart') || '""');
+  const monthBarchart = get('monthBarchart') || '';
   monthBarchartStore.set(monthBarchart);
   monthBarchartStore.subscribe((value) => {
     set('monthBarchart', JSON.stringify(value));
   });
 
-  const lineChartCategories = JSON.parse(get('lineChartCategories') || '[]');
+  const lineChartCategories = get('lineChartCategories') || [];
   lineChartCategoriesStore.set(lineChartCategories);
   lineChartCategoriesStore.subscribe((value) => {
     set('lineChartCategories', JSON.stringify(value));
   });
 
-  const lastSyncDate = get('sd') || '';
+  const lastSyncDate = get('sd', false) || '';
   lastSyncDateStore.set(lastSyncDate);
   lastSyncDateStore.subscribe((value) => {
     set('sd', value);
