@@ -1,5 +1,5 @@
 <div>
-  <img src="/favicon.svg" alt="Hamster Cash Logo" />
+  <img src="/icons/favicon.svg" alt="Hamster Cash Logo" />
   <h1>HAMSTER.CASH</h1>
   <h2>Your money in control!</h2>
 </div>

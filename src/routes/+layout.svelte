@@ -9,6 +9,11 @@
   }
 </script>
 
+<svelte:head>
+  <title>Hamster Cash</title>
+  <link rel="manifest" href="/app.webmanifest" />
+</svelte:head>
+
 <div class="container">
   <main>
     <slot />
