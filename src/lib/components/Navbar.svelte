@@ -72,6 +72,6 @@
 
   .active {
     opacity: 1;
-    --text-color: var(--focus-color);
+    --text-color: var(--primary-hover);
   }
 </style>

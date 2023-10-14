@@ -7,12 +7,10 @@
   --text-hover: #2f2f2f;
   --border-color: #e9e9e9;
 
-  --primary-color: #007bff;
-  --primary-hover: #0069d9;
+  --primary-color: #deaa87;
+  --primary-hover: #b38b70;
   --danger-color: #dc3545;
   --danger-hover: #bd2130;
-
-  --focus-color: #80bdff;
 }
 
 @media (prefers-color-scheme: dark) {
