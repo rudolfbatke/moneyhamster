@@ -21,8 +21,6 @@
 		"@types/crypto-js": "^4.1.2",
 		"@types/lodash": "^4.14.199",
 		"@typescript-eslint/eslint-plugin": "^6.7.3",
-		"@vite-pwa/assets-generator": "^0.0.10",
-		"@vite-pwa/sveltekit": "^0.2.7",
 		"chart.js": "^4.4.0",
 		"crypto-js": "^4.1.1",
 		"dotenv": "^16.3.1",
@@ -37,8 +35,7 @@
 		"svelte-check": "^3.5.2",
 		"typescript": "^4.9.5",
 		"vite": "^4.4.9",
-		"vitest": "^0.25.8",
-		"workbox-window": "^7.0.0"
+		"vitest": "^0.25.8"
 	},
 	"type": "module"
 }
