@@ -7,12 +7,12 @@
 
   const items = [
     {
-      title: 'Backup and Restore',
-      component: Backup
-    },
-    {
       title: 'The Story of the Hamster Cash',
       component: Story
+    },
+    {
+      title: 'Backup and Restore',
+      component: Backup
     },
     {
       title: 'Sync Data',

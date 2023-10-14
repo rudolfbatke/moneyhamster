@@ -93,7 +93,6 @@
 
 <style>
   .backup-button {
-    text-align: center;
     margin-bottom: 2em;
   }
 </style>
