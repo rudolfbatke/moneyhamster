@@ -62,7 +62,7 @@
   .fill {
     --button-border-color: var(--text-color);
     --button-background-color: var(--text-color);
-    --button-text-color: var(--background-color);
+    --button-text-color: var(--text-color);
   }
 
   .outline {
@@ -74,14 +74,11 @@
   }
 
   .primary {
-    --button-text-color: var(--primary-color);
-    --text-color: var(--primary-color);
+    --text-color: var(--text-color-light);
   }
   .primary.fill {
     --button-border-color: var(--primary-color);
     --button-background-color: var(--primary-color);
-    --button-text-color: var(--background-color);
-    --text-color: var(--background-color);
   }
   .primary.fill:hover {
     --button-background-hover: var(--primary-hover);
