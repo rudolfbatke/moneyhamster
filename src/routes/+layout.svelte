@@ -19,17 +19,24 @@
     <slot />
   </main>
 
-  <Navbar />
+  <div class="navbar">
+    <Navbar />
+  </div>
 </div>
 
 <style>
   .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: calc(100vh-3.6rem);
   }
+
   main {
     overflow: auto;
     flex-grow: 1;
+  }
+  
+  .navbar {
+    height: 3.6rem;
   }
 </style>

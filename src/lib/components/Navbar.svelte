@@ -54,9 +54,10 @@
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
     z-index: 10;
     border-top: 1px solid var(--border-color);
-    height: 3.6rem;
     width: 100%;
     border-radius: 1rem 1rem 0 0;
+    position: fixed;
+    bottom: 0;
   }
 
   a {
