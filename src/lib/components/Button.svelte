@@ -74,11 +74,13 @@
   }
 
   .primary {
-    --text-color: var(--text-color-light);
+    --text-color: var(--primary-color);
   }
+
   .primary.fill {
     --button-border-color: var(--primary-color);
     --button-background-color: var(--primary-color);
+    --text-color: var(--text-color-light);
   }
   .primary.fill:hover {
     --button-background-hover: var(--primary-hover);
