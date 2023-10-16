@@ -97,5 +97,5 @@ export const getYearMonth = (date) => {
 	const year = dateObj.getFullYear();
 	const monthString = String(dateObj.getMonth() + 1);
 	const month = monthString.length === 1 ? `0${monthString}` : monthString;
-	return `${year}-${Number(month)}`;
+	return `${year}-${month}`;
 };
