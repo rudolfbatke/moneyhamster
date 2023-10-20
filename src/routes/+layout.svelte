@@ -3,6 +3,8 @@
   import { browser } from '$app/environment';
   import Navbar from '$lib/components/Navbar.svelte';
   import { setAndSupscribeStores } from '$lib/utilities/localStorageStores';
+  import { pinStore } from '$lib/stores';
+  import Pin from '$lib/components/Pin.svelte';
 
   if (browser) {
     setAndSupscribeStores();
@@ -15,6 +17,8 @@
 </svelte:head>
 
 <div class="container">
+  {$pinStore || 'no pin'}
+  <Pin open={!$pinStore} />
   <main>
     <slot />
   </main>
@@ -35,7 +39,7 @@
     overflow: auto;
     flex-grow: 1;
   }
-  
+
   .navbar {
     height: 3.6rem;
   }

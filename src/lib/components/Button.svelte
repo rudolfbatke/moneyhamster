@@ -30,13 +30,13 @@
   button {
     display: inline-flex;
     border-radius: 1.2rem;
-    border: 1px solid;
+    border: unset;
     cursor: pointer;
     font-size: 1em;
     padding: 0.5em 1em;
     align-items: center;
-    border-color: var(--button-border-color, var(--background-color));
-    background-color: var(--button-background-color, var(--background-color));
+    border-color: var(--button-border-color, unset);
+    background-color: var(--button-background-color, unset);
     color: var(--button-text-color, var(--text-color));
     min-height: 2.5rem;
     height: fit-content;
@@ -59,14 +59,19 @@
     background-color: var(--button-background-color, var(--background-color));
   }
 
+  .outline,
   .fill {
-    --button-border-color: var(--text-color);
-    --button-background-color: var(--text-color);
-    --button-text-color: var(--text-color);
+    border: 1px solid;
   }
 
   .outline {
     --button-border-color: var(--text-color);
+  }
+
+  .fill {
+    --button-border-color: var(--text-color);
+    --button-background-color: var(--text-color);
+    --button-text-color: var(--text-color);
   }
 
   .fill:hover {
@@ -76,7 +81,6 @@
   .primary {
     --text-color: var(--primary-color);
   }
-
   .primary.fill {
     --button-border-color: var(--primary-color);
     --button-background-color: var(--primary-color);

@@ -15,6 +15,7 @@
   export let duplicateButton = false;
   export let actionButtons = true;
   export let open = false;
+  export let deleteButton = false;
 </script>
 
 <dialog {open}>
@@ -34,9 +35,11 @@
       {#if actionButtons}
         <div class="actions">
           <div>
-            <Button on:click={() => onButtonClick('delete')} color="danger">
-              <DeleteIcon />
-            </Button>
+            {#if deleteButton}
+              <Button on:click={() => onButtonClick('delete')} color="danger">
+                <DeleteIcon />
+              </Button>
+            {/if}
             {#if duplicateButton}
               <Button on:click={() => onButtonClick('duplicate')}>
                 <CopyIcon />

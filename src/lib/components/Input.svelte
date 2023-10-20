@@ -1,20 +1,15 @@
 <script>
-  /** @type {'text' | 'number' | 'date' | 'password'} */
-  export let type = 'text';
   export let label = '';
-  /** @type {string | number} */
-  export let value = '';
-  export let placeholder = '';
-  export let required = false;
-  export let disabled = false;
-  export let readonly = false;
-  export let id = '';
   export let inputWidth = '123px';
   export let labelWidth = 'unset';
   export let backgroundColor = 'unset';
   export let cursor = 'unset';
   /** @type {(value: string) => void} */
   export let onInput = () => {};
+  /** @type {import('svelte/elements').HTMLInputAttributes}*/
+  export let inputProps = {};
+  /** @type {'left'|'right'|'center'}*/
+  export let inputAlign = 'left';
 
   $: labelStyle = `
       width: ${labelWidth};
@@ -24,6 +19,7 @@
       cursor: ${cursor};
       background-color: ${backgroundColor ? backgroundColor : 'var(--background-color)'};
       width: ${inputWidth};
+      text-align: ${inputAlign};
   `;
 
   /** @type {import('svelte/elements').FormEventHandler<HTMLInputElement>}*/
@@ -36,23 +32,12 @@
 </script>
 
 <div>
-  <label for={id} style={labelStyle}>
-    {label}
-  </label>
-  <input
-    {type}
-    {value}
-    {placeholder}
-    {required}
-    {disabled}
-    {readonly}
-    {id}
-    name={id}
-    step="any"
-    style={inputStyle}
-    on:click
-    on:input={oninput}
-  />
+  {#if label}
+    <label for={inputProps.name} style={labelStyle}>
+      {label}
+    </label>
+  {/if}
+  <input step="any" style={inputStyle} on:input={oninput} {...inputProps} />
 </div>
 
 <style>
@@ -61,6 +46,7 @@
     color: var(--text-color);
     padding-bottom: 1rem;
     align-items: center;
+    flex-grow: 1;
   }
 
   label,
