@@ -7,12 +7,11 @@ import { sortCategories, sortExpenses } from './list';
 /** @typedef {{expenses: Expense[], categories: Category[]}} Payload */
 
 /**
- * @param {string} pin
  * @param {Payload|null} localPayload
  */
-export async function syncData(pin, localPayload = null) {
+export async function syncData(localPayload = null) {
   const id = localStorage.getItem('si');
-  if (!pin || !id) return;
+  if (!id) return;
 
   const db = await openAppDB();
   const nowDate = now();
@@ -31,7 +30,7 @@ export async function syncData(pin, localPayload = null) {
     const localSyncDate = localStorage.getItem('sd');
 
     if (!localSyncDate || remoteSyncDate > localSyncDate) {
-      const bytes = CryptoJS.AES.decrypt(remoteEncryptedData, `${id}${pin}`);
+      const bytes = CryptoJS.AES.decrypt(remoteEncryptedData, `${id}`);
       const remotePayload = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
       mergeRemoteIntoLocal(remotePayload, localPayload);
@@ -40,7 +39,7 @@ export async function syncData(pin, localPayload = null) {
 
   const localEncryptedData = CryptoJS.AES.encrypt(
     JSON.stringify(localPayload),
-    `${id}${pin}`
+    `${id}`
   ).toString();
 
   const response = await fetch('/api/sync', {

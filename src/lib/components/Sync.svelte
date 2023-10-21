@@ -1,5 +1,5 @@
 <script>
-  import { lastSyncDateStore, pinStore } from '$lib/stores';
+  import { lastSyncDateStore, } from '$lib/stores';
   import { localDateTime } from '$lib/utilities/formatter';
   import { syncData } from '$lib/utilities/sync';
   import Button from './Button.svelte';
@@ -8,18 +8,16 @@
   import VisibilityButton from './VisibilityButton.svelte';
 
   let id = '';
-  let pin = '';
-  let syncActive = !!localStorage.getItem('si') && $pinStore;
+  let syncActive = !!localStorage.getItem('si');
   let openSecretDialog = false;
   let pinVisible = false;
 
   /** @param {DialogAction} action */
   function onSecretDialogButtonClick(action) {
-    if ('close' === action) id = pin = '';
+    if ('close' === action) id ='';
     if ('save' === action) {
       localStorage.setItem('si', id);
-      pinStore.set(pin);
-      syncData(pin);
+      syncData();
     }
     openSecretDialog = false;
   }
@@ -47,32 +45,13 @@
           label="ID"
           labelWidth="27px"
         />
-        Please choose a PIN with 6 digits:
-        <div class="same-line">
-          <Input
-            inputProps={{
-              value: pin,
-              type: pinVisible ? 'text' : 'password',
-              placeholder: 'e.g. 123456',
-              minlength: 8,
-              maxlength: 8,
-              inputmode: 'numeric',
-              id: 'pin',
-              required: true
-            }}
-            labelWidth="27px"
-            onInput={(value) => (pin = value)}
-            label="PIN"
-          />
-          <VisibilityButton bind:visible={pinVisible} />
-        </div>
       </form>
     </Dialog>
   {:else}
     Syncing will occur automatically when you make changes.
     <div class="same-line">
       Last synced: {localDateTime($lastSyncDateStore)}
-      <Button color="primary" on:click={() => syncData($pinStore)}>Sync Now</Button>
+      <Button color="primary" on:click={() => syncData()}>Sync Now</Button>
     </div>
     <div id="qrcode" />
   {/if}

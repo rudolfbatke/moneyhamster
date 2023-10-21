@@ -39,4 +39,3 @@ function createOpenListItemsStore() {
 
 export const openListItemsStore = createOpenListItemsStore();
 export const lastSyncDateStore = writable('');
-export const pinStore = writable('');
