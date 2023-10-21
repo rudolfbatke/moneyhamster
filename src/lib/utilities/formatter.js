@@ -99,3 +99,10 @@ export const getYearMonth = (date) => {
 	const month = monthString.length === 1 ? `0${monthString}` : monthString;
 	return `${year}-${month}`;
 };
+
+/**
+ * Upper the first letter of a string
+ * 
+ * @param {string} string
+ */
+export const upperFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);

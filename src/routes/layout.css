@@ -11,6 +11,10 @@
   --primary-hover: #b38b70;
   --danger-color: #dc3545;
   --danger-hover: #bd2130;
+  
+  --font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-size: 0.9rem;
+  --font-weight: 400;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,8 +34,9 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.9rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
 }
 
 form {
@@ -46,4 +51,8 @@ h1 {
 h2 {
   font-size: 1.2rem;
   font-weight: unset;
+}
+
+p {
+  line-height: 1.5rem;
 }

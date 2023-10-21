@@ -11,7 +11,7 @@
   import Topbar from '$lib/components/Topbar.svelte';
   import { openAppDB } from '$lib/db';
   import AddIcon from '$lib/icons/AddIcon.svelte';
-  import { categoriesStore, expensesStore, openListItemsStore, pinStore } from '$lib/stores';
+  import { categoriesStore, expensesStore, openListItemsStore } from '$lib/stores';
   import { currency, localDate, localMonthYear, now, today } from '$lib/utilities/formatter';
   import {
     getIndexById,
@@ -99,7 +99,7 @@
     const db = await openAppDB();
     await db.put('expenses', editExpense);
 
-    syncData($pinStore, { expenses: updatedExpenses, categories });
+    syncData({ expenses: updatedExpenses, categories });
 
     editExpense = undefined;
     expenseIsNew = false;

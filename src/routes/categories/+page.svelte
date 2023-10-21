@@ -8,7 +8,7 @@
   import AddIcon from '$lib/icons/AddIcon.svelte';
   import { currency, getYearMonth, monthSlashYear, now } from '$lib/utilities/formatter';
   import { getNextId, sortCategories, undeletedItems } from '$lib/utilities/list';
-  import { expensesStore, categoriesStore, pinStore } from '$lib/stores';
+  import { expensesStore, categoriesStore } from '$lib/stores';
   import { categoryColors } from '$lib/settings';
   import { openAppDB } from '$lib/db';
   import { syncData } from '$lib/utilities/sync';
@@ -118,7 +118,7 @@
 
     const db = await openAppDB();
     await db.put('categories', editCategory);
-    syncData($pinStore);
+    syncData();
 
     editCategory = undefined;
     categoryIsNew = false;
