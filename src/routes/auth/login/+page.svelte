@@ -2,7 +2,7 @@
   import { goto } from '$app/navigation';
 
   const redirectAfterLogin = () => {
-    goto('/');
+    goto('/info#sync');
   };
 </script>
 

@@ -56,3 +56,13 @@ h2 {
 p {
   line-height: 1.5rem;
 }
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: none;
+}
