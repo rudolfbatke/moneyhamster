@@ -9,10 +9,7 @@
 
 <component id="sync">
   {#if !syncActive}
-    For the syncing to work, you need an account.
-    <p>
-      <a href="/auth/login">Start login or register</a>
-    </p>
+    For the syncing to work, you need to activate it.
   {:else}
     Syncing will occur automatically when you make changes.
     <div class="same-line">
