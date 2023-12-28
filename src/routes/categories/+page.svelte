@@ -118,7 +118,11 @@
 
     const db = await openAppDB();
     await db.put('categories', editCategory);
-    syncData();
+    const data = {
+      categories: $categoriesStore,
+      expenses: $expensesStore
+    };
+    syncData(data);
 
     editCategory = undefined;
     categoryIsNew = false;
@@ -238,10 +242,10 @@
       label="Color"
       inputProps={{
         id: 'color',
-        'on:click': () => (colorDialogIsOpen = true),
         readonly: true,
         value: editCategory?.color
       }}
+      on:click={() => (colorDialogIsOpen = true)}
     />
   </form>
 </Dialog>

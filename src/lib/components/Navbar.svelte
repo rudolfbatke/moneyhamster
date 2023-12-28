@@ -56,8 +56,6 @@
     border-top: 1px solid var(--border-color);
     width: 100%;
     border-radius: 1rem 1rem 0 0;
-    position: fixed;
-    bottom: 0;
   }
 
   a {

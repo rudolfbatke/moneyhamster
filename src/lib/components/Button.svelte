@@ -1,15 +1,11 @@
 <script>
   /** @type {'primary' | 'danger' | undefined} */
   export let color = undefined;
-
   /** @type {'fill' | 'outline' | 'plain' } */
   export let variant = 'plain';
-
   /** @type {string} */
   export let value = '';
-
   export let disabled = false;
-
   export let focusBorder = true;
 </script>
 
@@ -48,6 +44,7 @@
 
   button:focus {
     outline: none;
+    border-color: var(--primary-hover);
   }
 
   button:disabled {

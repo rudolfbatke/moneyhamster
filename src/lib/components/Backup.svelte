@@ -43,7 +43,6 @@
         const { expenses, categories, openListItems } = JSON.parse(
           event.target?.result?.toString() || '{}'
         );
-        console.log(expenses, categories, openListItems);
         expensesStore.set(expenses || []);
         categoriesStore.set(categories || []);
         openListItemsStore.set(openListItems || []);

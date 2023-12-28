@@ -51,9 +51,6 @@ export async function setAndSupscribeStores() {
     set('lineChartCategories', JSON.stringify(value));
   });
 
-  const lastSyncDate = get('sd', false) || '';
-  lastSyncDateStore.set(lastSyncDate);
-  lastSyncDateStore.subscribe((value) => {
-    set('sd', value);
-  });
+  const lastSyncDate = await db.get('sync', 'last-sync');
+  if (lastSyncDate instanceof Date) lastSyncDateStore.set(lastSyncDate);
 }

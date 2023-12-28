@@ -10,6 +10,11 @@
   export let inputProps = {};
   /** @type {'left'|'right'|'center'}*/
   export let inputAlign = 'left';
+  export let fullWidth = true;
+
+  $: containerStyle = `
+      display: ${fullWidth ? 'flex' : 'block'};
+  `;
 
   $: labelStyle = `
       width: ${labelWidth};
@@ -31,22 +36,20 @@
   }
 </script>
 
-<div>
+<div style={containerStyle}>
   {#if label}
     <label for={inputProps.name} style={labelStyle}>
       {label}
     </label>
   {/if}
-  <input step="any" style={inputStyle} on:input={oninput} {...inputProps} />
+  <input on:click step="any" style={inputStyle} on:input={oninput} {...inputProps} />
 </div>
 
 <style>
   div {
-    display: flex;
     color: var(--text-color);
     padding-bottom: 1rem;
     align-items: center;
-    flex-grow: 1;
   }
 
   label,
@@ -71,6 +74,6 @@
 
   input:focus {
     outline: none;
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-hover);
   }
 </style>

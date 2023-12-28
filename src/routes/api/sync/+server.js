@@ -7,15 +7,16 @@ import { readFile, writeFile } from 'node:fs/promises';
  * @type {import('./$types').RequestHandler}
  */
 export async function PUT({ request }) {
-  const { id, data, date } = await request.json();
+  /** @type {SyncPayload} */
+  const payload = await request.json();
 
-  if (!env.SYNC_IDS?.includes(id)) {
+  if (!env.SYNC_IDS?.includes(payload.syncId)) {
     return new Response(null, { status: 403 });
   }
 
-  const fileContent = JSON.stringify({ id, data, date });
+  const fileContent = JSON.stringify(payload);
 
-  writeFile(`tmp/${id}.json`, fileContent, { flag: 'w+' });
+  writeFile(`tmp/${payload.syncId}.json`, fileContent, { flag: 'w+' });
 
   return new Response();
 }

@@ -43,6 +43,11 @@
     cursor: pointer;
   }
 
+  .list-item:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
   div {
     display: block;
     color: var(--text-color);

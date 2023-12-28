@@ -80,18 +80,43 @@ declare global {
     component: ConstructorOfATypedSvelteComponent;
   };
 
+  type LastSyncSchema = {
+    key: 'last-sync';
+    value: Date;
+  };
+
+  type AesKeySchema = {
+    key: 'aes-key';
+    value: CryptoKey;
+  };
+
+  type SyncIdSchema = {
+    key: 'sync-id';
+    value: string;
+  };
+
   interface AppDB extends DBSchema {
     expenses: {
-      value: Expense;
-      key: number;
       indexes: { date: Date };
+      key: number;
+      value: Expense;
     };
 
     categories: {
-      value: Category;
       key: number;
+      value: Category;
     };
+
+    sync: LastSyncSchema | AesKeySchema | SyncIdSchema;
   }
+
+  type SyncPayload = {
+    data: string;
+    date: Date;
+    syncId: string;
+    aesKey: JsonWebKey;
+    iv: Uint8Array;
+  };
 }
 
 export {};

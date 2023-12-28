@@ -173,6 +173,7 @@
         id: 'amount',
         type: 'number',
         required: true,
+        placeholder: 'e.g. 10',
         value: editExpense?.amount || ''
       }}
     />

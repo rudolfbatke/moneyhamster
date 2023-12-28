@@ -7,11 +7,11 @@
  * @param {number} maximumFractionDigits
  */
 export const currency = (amount, maximumFractionDigits = 2) => {
-	return new Intl.NumberFormat(undefined, {
-		style: 'currency',
-		currency: 'EUR',
-		maximumFractionDigits
-	}).format(amount);
+  return new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits
+  }).format(amount);
 };
 
 /** Get the current date as a kebab string (2001-01-01) */
@@ -33,21 +33,21 @@ export const kebapDate = (date) => new Date(date).toISOString().split('T')[0];
  * @param {Date|string} date}
  */
 export const localDate = (date) =>
-	new Date(date).toLocaleDateString(undefined, {
-		year: '2-digit',
-		month: '2-digit',
-		day: '2-digit'
-	});
+  new Date(date).toLocaleDateString(undefined, {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit'
+  });
 
 /**
  * Format a date to a local date and time string (01/01/2001, 12:00)
  * @param {Date|string} date}
  */
 export const localDateTime = (date) =>
-	new Date(date).toLocaleDateString(undefined, {
-		hour: 'numeric',
-		minute: 'numeric'
-	});
+  new Date(date).toLocaleDateString(undefined, {
+    hour: 'numeric',
+    minute: 'numeric'
+  });
 
 /**
  * Format a date to a local month string (January)
@@ -76,7 +76,7 @@ export const localMonthYear = (date) => `${localMonth(date)} ${localYear(date)}`
  * @param {Date|string} date}
  */
 export const monthSlashYear = (date) =>
-	new Date(date).toLocaleString(undefined, { month: '2-digit', year: '2-digit' });
+  new Date(date).toLocaleString(undefined, { month: '2-digit', year: '2-digit' });
 
 /**
  * Format a date to a dash seperated string (01/01/2001)
@@ -84,7 +84,7 @@ export const monthSlashYear = (date) =>
  * @param {Date|string} date}
  */
 export const daySlashMonthSlashYear = (date) =>
-	new Date(date).toLocaleString(undefined, { day: '2-digit', month: '2-digit', year: '2-digit' });
+  new Date(date).toLocaleString(undefined, { day: '2-digit', month: '2-digit', year: '2-digit' });
 
 /**
  * Format a date to a year and month dash string (2001-01)
@@ -93,16 +93,16 @@ export const daySlashMonthSlashYear = (date) =>
  * @returns {Month}
  */
 export const getYearMonth = (date) => {
-	const dateObj = new Date(date);
-	const year = dateObj.getFullYear();
-	const monthString = String(dateObj.getMonth() + 1);
-	const month = monthString.length === 1 ? `0${monthString}` : monthString;
-	return `${year}-${month}`;
+  const dateObj = new Date(date);
+  const year = dateObj.getFullYear();
+  const monthString = String(dateObj.getMonth() + 1);
+  const month = monthString.length === 1 ? `0${monthString}` : monthString;
+  return `${year}-${month}`;
 };
 
 /**
  * Upper the first letter of a string
- * 
+ *
  * @param {string} string
  */
 export const upperFirst = (string) => string.charAt(0).toUpperCase() + string.slice(1);

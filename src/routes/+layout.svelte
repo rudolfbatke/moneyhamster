@@ -38,5 +38,8 @@
 
   .navbar {
     height: 3.6rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
   }
 </style>
