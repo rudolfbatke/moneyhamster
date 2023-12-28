@@ -11,6 +11,8 @@ declare global {
     // interface Platform {}
   }
 
+  type Locale = 'de' | 'en';
+
   interface ExpenseImport extends Expense {
     category: string;
   }

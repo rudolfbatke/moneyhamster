@@ -22,6 +22,7 @@
     undeletedItems
   } from '$lib/utilities/list';
   import { syncData } from '$lib/utilities/sync';
+  import { t } from '$lib/utilities/i18n';
 
   /** @type {Expense | undefined}*/
   let editExpense = undefined;
@@ -116,7 +117,7 @@
   }
 </script>
 
-<Topbar>Expenses</Topbar>
+<Topbar>{$t('expanses')}</Topbar>
 
 {#if expenses.length === 0}
   <NoItems />
