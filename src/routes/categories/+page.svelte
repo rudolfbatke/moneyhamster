@@ -13,6 +13,7 @@
   import { openAppDB } from '$lib/db';
   import { syncData } from '$lib/utilities/sync';
   import NoItems from '$lib/components/NoItems.svelte';
+  import { t } from '$lib/utilities/i18n';
 
   /** @type {Category | undefined}*/
   let editCategory = undefined;
@@ -155,14 +156,14 @@
   }
 </script>
 
-<Topbar>Categories</Topbar>
+<Topbar>{$t('categories')}</Topbar>
 
 {#if categories.length === 0}
   <NoItems />
 {:else}
   <div class="table">
     <div class="header row">
-      <div class="cell category">Category</div>
+      <div class="cell category">{$t('category')}</div>
       <div class="cells">
         {#each months as month}
           <div class="cell">
@@ -205,7 +206,7 @@
     {/each}
 
     <div class="totals row">
-      <div class="cell category">Totals</div>
+      <div class="cell category">{$t('total')}</div>
       <div class="cells">
         {#each monthlyTotals as total}
           <div class="cell">
@@ -223,12 +224,12 @@
 {/if}
 
 <Dialog onButtonClick={onDialogButtonClick} open={!!editCategory} deleteButton={!categoryIsNew}>
-  <span slot="title">{categoryIsNew ? 'New Category' : 'Edit Category'}</span>
+  <span slot="title">{categoryIsNew ? $t('newCategory') : $t('editCategory')}</span>
   <form bind:this={form}>
     <Input
       inputProps={{
         id: 'issue',
-        placeholder: 'e.g. Food',
+        placeholder: `${$t('eg')} ${$t('food')}`,
         required: true,
         value: editCategory?.name || ''
       }}
@@ -254,7 +255,7 @@
   onButtonClick={() => (colorDialogIsOpen = false)}
   open={colorDialogIsOpen}
 >
-  <span slot="title">Pick a Color</span>
+  <span slot="title">{$t('pickColor')}</span>
   <div class="color-select">
     {#each categoryColors as color}
       <div

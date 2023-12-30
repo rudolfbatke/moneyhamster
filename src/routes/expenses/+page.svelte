@@ -133,7 +133,8 @@
       {#each expensesWithCategories(expenses) as { expense, category }}
         <ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))} hover>
           {`${localDate(expense.date)} ${expense.issue}`}
-          <span slot="sub" style:color={category?.color}>{category?.name || 'No Category'}</span>
+          <span slot="sub" style:color={category?.color}>{category?.name || $t('nowCategory')}</span
+          >
           <span slot="end">{currency(expense.amount)}</span>
         </ListItem>
       {/each}
@@ -147,10 +148,10 @@
   deleteButton={!expenseIsNew}
   open={!!editExpense}
 >
-  <span slot="title">{expenseIsNew ? 'New Expense' : 'Edit Expense'}</span>
+  <span slot="title">{expenseIsNew ? $t('newExpense') : $t('editExpense')}</span>
   <form bind:this={form}>
     <Input
-      label="Date:"
+      label={$t('date')}
       inputProps={{
         id: 'date',
         type: 'date',

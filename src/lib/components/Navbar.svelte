@@ -4,6 +4,7 @@
   import { page } from '$app/stores';
   import MonitoringIcon from '$lib/icons/MonitoringIcon.svelte';
   import InfoIcon from '$lib/icons/InfoIcon.svelte';
+  import { startsWith } from 'lodash';
 
   let pathname = '';
 
@@ -38,7 +39,7 @@
 <!-- Bottom navigation bar with icons and text -->
 <nav>
   {#each navItems as item}
-    <a href={item.path} class:active={pathname === item.path}>
+    <a href={item.path} class:active={pathname.startsWith(item.path)}>
       <svelte:component this={item.icon} />
       {item.name}
     </a>

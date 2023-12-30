@@ -13,13 +13,15 @@ const en = {
   apples: 'Äpfel',
   name: 'Name',
   newCategory: 'New Category',
+  editCategory: 'Edit Category',
   newExpense: 'New Expense',
+  editExpense: 'editExpense',
   nowCategory: 'No Category',
   noItems: 'No Items',
   pickColor: 'Pick a color',
   save: 'Save',
   selectCategory: 'select a category',
-  total: 'Totals'
+  total: 'Total'
 };
 
 const de = { ...en };
@@ -38,6 +40,8 @@ de.issue = 'Betreff';
 de.apples = 'Äpfel';
 de.name = 'Name';
 de.newCategory = 'Neue Kategorie';
+de.editCategory = 'Kategorie bearbeiten';
+de.editExpense = 'Ausgabe bearbeiten';
 de.newExpense = 'Neue Ausgabe';
 de.noItems = 'Keine Einträge';
 de.nowCategory = 'Keine Kategorie';
