@@ -1,5 +1,6 @@
 import { daySlashMonthSlashYear, getYearMonth } from './formatter';
-import { maxBy, sortBy } from 'lodash';
+import maxBy from 'lodash/maxBy';
+import sortBy from 'lodash/sortBy';
 
 /**
  * @template T

@@ -4,7 +4,6 @@
   import { page } from '$app/stores';
   import MonitoringIcon from '$lib/icons/MonitoringIcon.svelte';
   import InfoIcon from '$lib/icons/InfoIcon.svelte';
-  import { startsWith } from 'lodash';
 
   let pathname = '';
 
