@@ -11,7 +11,7 @@
   import { expensesStore, categoriesStore } from '$lib/stores';
   import { categoryColors } from '$lib/settings';
   import { openAppDB } from '$lib/db';
-  import { syncData } from '$lib/utilities/sync';
+  // import { syncData } from '$lib/utilities/sync';
   import NoItems from '$lib/components/NoItems.svelte';
   import { t } from '$lib/utilities/i18n';
 
@@ -123,7 +123,7 @@
       categories: $categoriesStore,
       expenses: $expensesStore
     };
-    syncData(data);
+    // syncData(data);
 
     editCategory = undefined;
     categoryIsNew = false;
@@ -156,14 +156,14 @@
   }
 </script>
 
-<Topbar>{$t('categories')}</Topbar>
+<Topbar>{t('categories')}</Topbar>
 
 {#if categories.length === 0}
   <NoItems />
 {:else}
   <div class="table">
     <div class="header row">
-      <div class="cell category">{$t('category')}</div>
+      <div class="cell category">{t('category')}</div>
       <div class="cells">
         {#each months as month}
           <div class="cell">
@@ -206,7 +206,7 @@
     {/each}
 
     <div class="totals row">
-      <div class="cell category">{$t('total')}</div>
+      <div class="cell category">{t('total')}</div>
       <div class="cells">
         {#each monthlyTotals as total}
           <div class="cell">
@@ -224,12 +224,12 @@
 {/if}
 
 <Dialog onButtonClick={onDialogButtonClick} open={!!editCategory} deleteButton={!categoryIsNew}>
-  <span slot="title">{categoryIsNew ? $t('newCategory') : $t('editCategory')}</span>
+  <span slot="title">{categoryIsNew ? t('newCategory') : t('editCategory')}</span>
   <form bind:this={form}>
     <Input
       inputProps={{
         id: 'issue',
-        placeholder: `${$t('eg')} ${$t('food')}`,
+        placeholder: `${t('eg')} ${t('food')}`,
         required: true,
         value: editCategory?.name || ''
       }}
@@ -255,7 +255,7 @@
   onButtonClick={() => (colorDialogIsOpen = false)}
   open={colorDialogIsOpen}
 >
-  <span slot="title">{$t('pickColor')}</span>
+  <span slot="title">{t('pickColor')}</span>
   <div class="color-select">
     {#each categoryColors as color}
       <div

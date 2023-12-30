@@ -4,6 +4,7 @@
   import { page } from '$app/stores';
   import MonitoringIcon from '$lib/icons/MonitoringIcon.svelte';
   import InfoIcon from '$lib/icons/InfoIcon.svelte';
+  import { t } from '$lib/utilities/i18n';
 
   let pathname = '';
 
@@ -13,22 +14,22 @@
 
   const navItems = [
     {
-      name: 'Expenses',
+      name: t('expenses'),
       path: '/expenses',
       icon: ShoppingCartIcon
     },
     {
-      name: 'Categories',
+      name: t('categories'),
       path: '/categories',
       icon: SellIcon
     },
     {
-      name: 'Charts',
+      name: t('charts'),
       path: '/charts',
       icon: MonitoringIcon
     },
     {
-      name: 'Info',
+      name: t('info'),
       path: '/info',
       icon: InfoIcon
     }

@@ -1,7 +1,11 @@
 <script>
   import { openAppDB } from '$lib/db';
-  import { categoriesStore, expensesStore, lastSyncDateStore } from '$lib/stores';
-  import { localDateTime } from '$lib/utilities/formatter';
+  import {
+    categoriesStore,
+    expensesStore
+    // lastSyncDateStore
+  } from '$lib/stores';
+  // import { localDateTime } from '$lib/utilities/formatter';
   import { syncData } from '$lib/utilities/sync';
   import { onMount } from 'svelte';
   import Button from './Button.svelte';
@@ -67,7 +71,7 @@
   {:else}
     Syncing will occur automatically when you make changes.
     <div class="same-line">
-      Last synced: {localDateTime($lastSyncDateStore)}
+      <!-- Last synced: {localDateTime($lastSyncDateStore)} -->
       <a href="?force-sync" on:keydown={sync} on:click={sync}>Force Sync</a>
     </div>
     <p />

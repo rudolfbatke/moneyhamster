@@ -1,16 +1,19 @@
-import { derived, writable } from 'svelte/store';
+import { browser } from '$app/environment';
 import translations from './translations';
 
-/** @type {import('svelte/store').Writable<Locale>} */
-export const locale = writable('en');
-export const locales = Object.keys(translations);
-
 /**
- * @param {Locale} locale
  * @param {keyof typeof translations.en} key
  * @param {{[key: string]: string}} vars
  * */
-function translate(locale, key, vars) {
+export function t(key, vars = {}) {
+  /** @type {'en'|'de'} */
+  let locale = 'en';
+  if (browser) {
+    const language = navigator.language || navigator.languages[0];
+    const langLocale = language.split('-')[0];
+    if (langLocale == 'de' || langLocale == 'en') locale = langLocale;
+  }
+
   let text = translations[locale][key];
 
   Object.keys(vars).map((k) => {
@@ -20,13 +23,3 @@ function translate(locale, key, vars) {
 
   return text;
 }
-
-export const t = derived(
-  locale,
-  ($locale) =>
-    /**
-     * @param {keyof typeof translations.en} key
-     */
-    (key, vars = {}) =>
-      translate($locale, key, vars)
-);

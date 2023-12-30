@@ -40,4 +40,4 @@ function createOpenListItemsStore() {
 export const openListItemsStore = createOpenListItemsStore();
 
 /** @type { import('svelte/store').Writable<Date> } */
-export const lastSyncDateStore = writable();
+// export const lastSyncDateStore = writable();

@@ -7,9 +7,10 @@ const en = {
   cost: 'Cost amount',
   date: 'Date',
   eg: 'e.g.',
-  expanses: 'Expanses',
+  expenses: 'Expanses',
   food: 'Food',
   issue: 'Issue',
+  info: 'Info',
   apples: 'Äpfel',
   name: 'Name',
   newCategory: 'New Category',
@@ -34,7 +35,7 @@ de.copy = 'Kopie';
 de.cost = 'Kosten';
 de.date = 'Datum';
 de.eg = 'z.B.';
-de.expanses = 'Ausgaben';
+de.expenses = 'Ausgaben';
 de.food = 'Essen';
 de.issue = 'Betreff';
 de.apples = 'Äpfel';

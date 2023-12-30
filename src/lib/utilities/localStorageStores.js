@@ -4,8 +4,8 @@ import {
   categoriesStore,
   openListItemsStore,
   monthBarchartStore,
-  lineChartCategoriesStore,
-  lastSyncDateStore
+  lineChartCategoriesStore
+  // lastSyncDateStore
 } from '$lib/stores';
 import { sortCategories, sortExpenses } from '$lib/utilities/list';
 
@@ -51,6 +51,6 @@ export async function setAndSupscribeStores() {
     set('lineChartCategories', JSON.stringify(value));
   });
 
-  const lastSyncDate = await db.get('sync', 'last-sync');
-  if (lastSyncDate instanceof Date) lastSyncDateStore.set(lastSyncDate);
+  // const lastSyncDate = await db.get('sync', 'last-sync');
+  // if (lastSyncDate instanceof Date) lastSyncDateStore.set(lastSyncDate);
 }

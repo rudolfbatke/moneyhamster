@@ -22,5 +22,5 @@
   ];
 </script>
 
-<Topbar>{$t('charts')}</Topbar>
+<Topbar>{t('charts')}</Topbar>
 <List {items} />

@@ -1,5 +1,9 @@
 import { openAppDB } from '$lib/db';
-import { categoriesStore, expensesStore, lastSyncDateStore } from '$lib/stores';
+import {
+  categoriesStore,
+  expensesStore
+  // lastSyncDateStore
+} from '$lib/stores';
 import { sortCategories, sortExpenses } from './list';
 
 /** @typedef {{expenses: Expense[], categories: Category[]}} PlainData */
@@ -61,8 +65,8 @@ export async function syncData(localPlainData) {
   });
 
   if (response.ok) {
-    lastSyncDateStore.set(currentDate);
-    db.put('sync', currentDate, 'last-sync');
+    // lastSyncDateStore.set(currentDate);
+    // db.put('sync', currentDate, 'last-sync');
   }
 
   /**

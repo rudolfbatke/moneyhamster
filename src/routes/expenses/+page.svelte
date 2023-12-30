@@ -21,7 +21,7 @@
     sum,
     undeletedItems
   } from '$lib/utilities/list';
-  import { syncData } from '$lib/utilities/sync';
+  // import { syncData } from '$lib/utilities/sync';
   import { t } from '$lib/utilities/i18n';
 
   /** @type {Expense | undefined}*/
@@ -100,7 +100,7 @@
     const db = await openAppDB();
     await db.put('expenses', editExpense);
 
-    syncData({ expenses: updatedExpenses, categories });
+    // syncData({ expenses: updatedExpenses, categories });
 
     editExpense = undefined;
     expenseIsNew = false;
@@ -117,7 +117,7 @@
   }
 </script>
 
-<Topbar>{$t('expanses')}</Topbar>
+<Topbar>{t('expenses')}</Topbar>
 
 {#if expenses.length === 0}
   <NoItems />
@@ -133,8 +133,7 @@
       {#each expensesWithCategories(expenses) as { expense, category }}
         <ListItem lucent on:click={() => ((editExpense = expense), (expenseIsNew = false))} hover>
           {`${localDate(expense.date)} ${expense.issue}`}
-          <span slot="sub" style:color={category?.color}>{category?.name || $t('nowCategory')}</span
-          >
+          <span slot="sub" style:color={category?.color}>{category?.name || t('nowCategory')}</span>
           <span slot="end">{currency(expense.amount)}</span>
         </ListItem>
       {/each}
@@ -148,10 +147,10 @@
   deleteButton={!expenseIsNew}
   open={!!editExpense}
 >
-  <span slot="title">{expenseIsNew ? $t('newExpense') : $t('editExpense')}</span>
+  <span slot="title">{expenseIsNew ? t('newExpense') : t('editExpense')}</span>
   <form bind:this={form}>
     <Input
-      label={$t('date')}
+      label={t('date')}
       inputProps={{
         id: 'date',
         type: 'date',
