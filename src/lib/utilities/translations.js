@@ -18,10 +18,11 @@ const en = {
   newExpense: 'New Expense',
   editExpense: 'editExpense',
   nowCategory: 'No Category',
-  noItems: 'No Items',
+  noItems: 'No items available',
   pickColor: 'Pick a color',
   save: 'Save',
   selectCategory: 'select a category',
+  slogan: 'Your money in control!',
   total: 'Total'
 };
 
@@ -44,11 +45,12 @@ de.newCategory = 'Neue Kategorie';
 de.editCategory = 'Kategorie bearbeiten';
 de.editExpense = 'Ausgabe bearbeiten';
 de.newExpense = 'Neue Ausgabe';
-de.noItems = 'Keine Einträge';
+de.noItems = 'Keine Einträge vorhanden';
 de.nowCategory = 'Keine Kategorie';
 de.pickColor = 'Wähle eine Farbe';
 de.save = 'Speichern';
 de.selectCategory = 'wähle eine Kategorie';
+de.slogan = 'Dein Geld unter Kontrolle!';
 de.total = 'Summe';
 
 export default {

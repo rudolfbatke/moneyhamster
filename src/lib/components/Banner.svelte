@@ -1,7 +1,11 @@
+<script>
+  import { t } from '$lib/utilities/i18n';
+</script>
+
 <div>
   <img src="/icons/favicon.svg" alt="Hamster Cash Logo" />
   <h1>HAMSTER.CASH</h1>
-  <h2>Your money in control!</h2>
+  <h2>{t('slogan')}</h2>
 </div>
 
 <style>

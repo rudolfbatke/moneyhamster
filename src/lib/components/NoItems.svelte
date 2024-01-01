@@ -1,10 +1,13 @@
+<script>
+  import { t } from '$lib/utilities/i18n';
+</script>
+
 <div>
-	<p>No itmes yet.</p>
-	<p>Click the + button to add the first.</p>
+  <p>{t('noItems')}</p>
 </div>
 
 <style>
-	div {
-		padding: 0 1rem;
-	}
+  div {
+    padding: 0 1rem;
+  }
 </style>
