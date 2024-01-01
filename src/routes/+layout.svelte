@@ -37,6 +37,7 @@
   }
 
   .navbar {
+    z-index: 10;
     height: 3.6rem;
     position: fixed;
     width: 100%;
