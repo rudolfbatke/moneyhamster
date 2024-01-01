@@ -7,7 +7,7 @@ const en = {
   cost: 'Cost amount',
   date: 'Date',
   eg: 'e.g.',
-  expenses: 'Expanses',
+  expenses: 'Expenses',
   food: 'Food',
   issue: 'Issue',
   info: 'Info',
