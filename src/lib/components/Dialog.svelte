@@ -3,6 +3,7 @@
   import CloseIcon from '$lib/icons/CloseIcon.svelte';
   import CopyIcon from '$lib/icons/CopyIcon.svelte';
   import DeleteIcon from '$lib/icons/DeleteIcon.svelte';
+  import { t } from '$lib/utilities/i18n';
 
   /**
    * Executed when the user clicks on a button
@@ -46,7 +47,7 @@
               </Button>
             {/if}
           </div>
-          <Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>Save</Button
+          <Button color="primary" variant="fill" on:click={() => onButtonClick('save')}>{t('save')}</Button
           >
         </div>
       {/if}
