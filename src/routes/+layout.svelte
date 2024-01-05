@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-  <title>Hamster Cash</title>
+  <title>HAMSTER.CASH</title>
   <link rel="manifest" href="/app.webmanifest" />
 </svelte:head>
 
