@@ -159,7 +159,7 @@
       }}
     />
     <Input
-      label="Issue:"
+      label={t('issue')}
       inputProps={{
         id: 'issue',
         type: 'text',
@@ -169,7 +169,7 @@
       }}
     />
     <Input
-      label="Cost amount:"
+      label={t('cost')}
       inputProps={{
         id: 'amount',
         type: 'number',
@@ -179,7 +179,7 @@
       }}
     />
     <Select
-      label="Category:"
+      label={t('category')}
       id="category"
       value={editExpense?.category || ''}
       placeholder="select a category"
