@@ -17,41 +17,20 @@ const en = {
   editCategory: 'Edit Category',
   newExpense: 'New Expense',
   editExpense: 'editExpense',
-  nowCategory: 'No Category',
+  noCategory: 'No Category',
   noItems: 'No items available',
   pickColor: 'Pick a color',
   save: 'Save',
   selectCategory: 'select a category',
-  slogan: 'Your money in control!',
+  slogan: 'Track your money to control!',
   total: 'Total'
 };
 
 const de = { ...en };
 
-de.categories = 'Kategorien';
-de.category = 'Kategorie';
-de.charts = 'Graphen';
-de.color = 'Farbe';
-de.copy = 'Kopie';
-de.cost = 'Kosten';
-de.date = 'Datum';
-de.eg = 'z.B.';
-de.expenses = 'Ausgaben';
-de.food = 'Essen';
-de.issue = 'Betreff';
-de.apples = 'Äpfel';
-de.name = 'Name';
-de.newCategory = 'Neue Kategorie';
-de.editCategory = 'Kategorie bearbeiten';
-de.editExpense = 'Ausgabe bearbeiten';
-de.newExpense = 'Neue Ausgabe';
-de.noItems = 'Keine Einträge vorhanden';
-de.nowCategory = 'Keine Kategorie';
-de.pickColor = 'Wähle eine Farbe';
-de.save = 'Speichern';
-de.selectCategory = 'wähle eine Kategorie';
-de.slogan = 'Dein Geld unter Kontrolle!';
-de.total = 'Summe';
+
+de.slogan = 'Ihr Geld unter Kontrolle!';
+de.info = 'Info';
 
 export default {
   de,
